@@ -30,76 +30,90 @@
 
 ## Introducción
 
-Guía y dotfiles para dejar este MacBook con Linux Mint **listo para trabajar desde cero**, empezando por lo primero: **preparar la USB con la imagen de Linux Mint**.
+Guía y dotfiles para dejar este MacBook con Linux Mint **listo para trabajar desde cero**.
 
-Después de instalar el sistema, este repo reproduce toda la configuración del equipo: actualizaciones, WiFi Broadcom BCM4331, teclado Mac español, trackpad, atajos estilo macOS, aplicaciones, entorno de desarrollo y acceso remoto con RustDesk.
+El tutorial empieza por lo básico: **necesitas un USB y descargar la imagen de Linux Mint**. Después se instala el sistema y este repo aplica toda la configuración del equipo: WiFi Broadcom BCM4331, teclado Mac español, trackpad, atajos estilo macOS, aplicaciones, entorno de desarrollo y RustDesk.
 
-Todo lo que hay aquí se aplicó y verificó en este equipo. Los scripts son idempotentes: se pueden volver a ejecutar sin romper nada.
+Los scripts son idempotentes: se pueden volver a ejecutar sin romper nada.
 
-## Empieza aquí
+---
 
-| Orden | Paso                                              | Dónde                                   |
-| ----- | ------------------------------------------------- | --------------------------------------- |
-| 1     | Preparar la USB con Linux Mint 22.3               | [00 · Preparar USB](00-preparar-usb/)   |
-| 2     | Arrancar el MacBook e instalar Linux Mint         | [00 · Instalación](00-preparar-usb/#5-instalar-linux-mint) |
-| 3     | Clonar este repo y ejecutar `./install.sh`        | [Instalación](#instalación)             |
-| 4     | Verificar que todo quedó bien                     | [Verificación](#verifica-que-quedó-bien) |
+## 1. Necesitas un USB
 
-## Requisitos
+| Dato          | Valor                                                              |
+| ------------- | ------------------------------------------------------------------ |
+| Tamaño        | **4 GB mínimo**, 8 GB o más recomendado                            |
+| Estado        | **Se borra por completo** (no guardes nada importante en él)       |
+| Conexión      | USB 2.0 o 3.0; en el MacBook, mejor el puerto izquierdo            |
+| Para crear la USB | Este Linux Mint, otro Linux, macOS o Windows                   |
 
-| Requisito        | Detalle                                                                 |
-| ---------------- | ----------------------------------------------------------------------- |
-| **USB**          | 4 GB mínimo (8 GB recomendado). **Se borra por completo.**              |
-| **Imagen ISO**   | Linux Mint **22.3 “Zena” Cinnamon 64-bit** (~2.9 GB)                    |
-| **Cable Ethernet** | **Obligatorio en este MacBook**: el WiFi BCM4331 no funciona en live ni recién instalado |
-| **Respaldo**     | Tus archivos deben estar en la nube o en un disco externo                |
-| **Cargador**     | La batería está al ~29 %; no alcanza para una instalación                |
-| **Cuenta GitHub**| Para clonar el repo y subir cambios                                      |
-| **Hardware**     | MacBook Pro A1278 o cualquier PC Intel/AMD con Linux Mint                |
+> ⚠️ **Antes de continuar:** respalda tus archivos personales. Al instalar Linux Mint se borra el disco completo del MacBook.
 
-> 📘 La guía completa de la USB (descarga, verificación SHA256, `dd`/Etcher/Rufus, arranque con `⌥` y particiones) está en **[00 · Preparar la USB](00-preparar-usb/)**.
+## 2. Descarga la imagen de Linux Mint
 
-### Resumen de la USB
+Descarga la **ISO oficial** de Linux Mint 22.3 “Zena” Cinnamon de 64 bits (~2.9 GB):
+
+### ⬇️ [Descargar linuxmint-22.3-cinnamon-64bit.iso](https://mirrors.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-cinnamon-64bit.iso)
+
+También puedes usar:
+
+- [Página oficial de descargas](https://linuxmint.com/download.php)
+- [Descarga por torrent](https://linuxmint.com/torrents/linuxmint-22.3-cinnamon-64bit.iso.torrent)
+- [Lista oficial de hashes SHA256](https://mirrors.kernel.org/linuxmint/stable/22.3/sha256sum.txt)
+
+### Por terminal
 
 ```bash
-# Descargar y verificar
 cd ~/Descargas
+
+# Descargar la imagen
 curl -fLO https://mirrors.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-cinnamon-64bit.iso
+
+# Descargar la lista de hashes y verificar
 curl -fLO https://mirrors.kernel.org/linuxmint/stable/22.3/sha256sum.txt
 sha256sum -c --ignore-missing sha256sum.txt
+```
 
-# Escribir en la USB (identifica el disco con lsblk; ejemplo /dev/sdb)
-lsblk -o NAME,SIZE,MODEL,TRAN
-sudo dd if=linuxmint-22.3-cinnamon-64bit.iso of=/dev/sdb bs=4M status=progress oflag=sync
+Debe responder `linuxmint-22.3-cinnamon-64bit.iso: OK`. Si no coincide, vuelve a descargarla.
+
+## 3. Prepara la USB
+
+Con la ISO descargada, escribe la imagen en el USB. Lo más fácil en Linux Mint es **USB Image Writer** (`mintstick`): selecciona la ISO, selecciona el USB y pulsa **Escribir**.
+
+Por terminal:
+
+```bash
+# Identifica el USB (ejemplo: /dev/sdb). ¡No lo confundas con el disco del sistema!
+lsblk -o NAME,SIZE,MODEL,TRAN,MOUNTPOINTS
+
+# Escribe la ISO en el DISCO completo, sin número de partición
+sudo dd if=~/Descargas/linuxmint-22.3-cinnamon-64bit.iso \
+        of=/dev/sdb bs=4M status=progress oflag=sync
+
 sync && sudo eject /dev/sdb
 ```
 
-Para arrancar el Mac: apágalo, conecta la USB, enciende manteniendo **Option (⌥)** y elige **EFI Boot**.
+> 📘 Guía detallada para **Linux, macOS y Windows**, verificación SHA256 y solución de problemas: **[00 · Preparar la USB](00-preparar-usb/)**.
 
-## Índice
+## 4. Instala Linux Mint
 
-| #   | Sección                                            | Descripción                                                |
-| --- | -------------------------------------------------- | ---------------------------------------------------------- |
-| 00  | [💾 Preparar USB](00-preparar-usb/)                | Descargar la ISO, crear la USB, arrancar e instalar Mint   |
-| 01  | [🖥️ Sistema](01-sistema/)                          | Actualizaciones, drivers, preferencias de Cinnamon         |
-| 02  | [📦 Aplicaciones](02-aplicaciones/)                | Brave, Firefox, RustDesk, utilidades y lista de paquetes   |
-| 03  | [💻 Dev Environment](03-dev-environment/)          | Bash, Git, GitHub CLI, OpenCode                            |
-| 04  | [⚡ Productividad](04-productividad/)               | Navegadores, correo, ofimática y atajos de teclado         |
-| 05  | [🤖 IA Local](05-ia-local/)                        | OpenCode, MCP y modelos locales (opcional)                 |
-| 06  | [🔧 Hardware MacBook](06-hardware-macbook/)        | WiFi BCM4331, teclado `es(mac)`, trackpad y batería        |
-| 07  | [🖥️ RustDesk](07-rustdesk/)                         | Instalación, acceso remoto y problemas de "esperando imagen" |
+1. Apaga el MacBook y conecta la USB.
+2. Enciende manteniendo pulsada **Option (⌥)** hasta ver el selector de arranque.
+3. Elige **EFI Boot** → **Start Linux Mint**.
+4. **Conecta el cable Ethernet.** El WiFi BCM4331 no funciona en la sesión live ni recién instalado.
+5. Abre **Install Linux Mint** y elige:
+   - Idioma: **Español (México)**
+   - Teclado: **Spanish** (la variante Mac se instala después con este repo)
+   - **Erase disk and install Linux Mint** (borra macOS y todo el disco)
+   - Marca **Install multimedia codecs**
+6. Usuario: `yorbimv` (para que coincidan las rutas de este repo).
+7. Termina, reinicia y retira la USB.
 
-## Instalación
+> Si el instalador no crea bien el arranque EFI, en [00 · Instalación](00-preparar-usb/#5-instalar-linux-mint) están las particiones manuales (512 MB FAT32 en `/boot/efi` + ext4 en `/`).
 
-### 1. Sistema recién instalado
+## 5. Deja el equipo listo
 
-Después del paso [00](00-preparar-usb/), el equipo debe tener:
-
-- Linux Mint 22.3 instalado en modo **UEFI** (sin Secure Boot).
-- **Cable Ethernet** conectado y funcionando.
-- Usuario `yorbimv` y sesión **X11 / Cinnamon**.
-
-### 2. Clonar y ejecutar
+Ya con Linux Mint instalado y el cable Ethernet conectado:
 
 ```bash
 sudo apt-get update
@@ -117,11 +131,22 @@ cd ~/Documentos/GitHub/linux-mint && ./install.sh
 - Cada paso **muestra lo que va a hacer** y pide confirmación `[s/N]`.
 - Los dotfiles se enlazan uno por uno y se respalda lo que ya exista (`*.bak-<fecha>`).
 - Los pasos que necesitan `root` lo piden con `sudo` en el momento.
-- El **paso 05** instala el WiFi; al terminar, reinicia y desconecta el cable.
+- El **paso 05** instala el WiFi; al terminar, reinicia y ya puedes desconectar el cable.
 
-### 3. Manual
+---
 
-Cada sección (00 a 07) explica los mismos pasos para hacerlos a mano, con los comandos y el porqué.
+## Índice de secciones
+
+| #   | Sección                                            | Descripción                                                |
+| --- | -------------------------------------------------- | ---------------------------------------------------------- |
+| 00  | [💾 Preparar USB](00-preparar-usb/)                | Descargar la ISO, crear la USB, arrancar e instalar Mint   |
+| 01  | [🖥️ Sistema](01-sistema/)                          | Actualizaciones, drivers, preferencias de Cinnamon         |
+| 02  | [📦 Aplicaciones](02-aplicaciones/)                | Brave, Firefox, RustDesk, utilidades y lista de paquetes   |
+| 03  | [💻 Dev Environment](03-dev-environment/)          | Bash, Git, GitHub CLI, OpenCode                            |
+| 04  | [⚡ Productividad](04-productividad/)               | Navegadores, correo, ofimática y atajos de teclado         |
+| 05  | [🤖 IA Local](05-ia-local/)                        | OpenCode, MCP y modelos locales (opcional)                 |
+| 06  | [🔧 Hardware MacBook](06-hardware-macbook/)        | WiFi BCM4331, teclado `es(mac)`, trackpad y batería        |
+| 07  | [🖥️ RustDesk](07-rustdesk/)                         | Instalación, acceso remoto y problemas de "esperando imagen" |
 
 ## Qué incluye
 
@@ -159,7 +184,7 @@ git add -A && git commit -m "config: ..." && git push
 
 ---
 
-**Antes de formatear:** copia tus archivos, verifica la ISO y ten el cable Ethernet a mano. La guía está en **[00 · Preparar la USB](00-preparar-usb/)**.
+**Antes de formatear:** respalda tus archivos, consigue el USB, descarga la ISO y ten el cable Ethernet a mano.
 
 **Problemas comunes y soluciones en [troubleshooting/](troubleshooting/)**
 
