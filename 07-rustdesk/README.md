@@ -4,6 +4,8 @@
 
 RustDesk se usa para **entrar a este MacBook desde otro equipo** y para **conectarse al Mac de la oficina**. No viene de un repositorio apt: se instala desde GitHub para tener siempre la última versión.
 
+> **Estado: funcionando** (noviembre 2026). Con `codec-preference = 'vp8'` y `use-texture-render = 'N'` la sesión recibe vídeo y audio a 30 fps. La causa del "esperando imagen" era el equipo remoto (dormido/bloqueado o sin permisos de grabación de pantalla).
+
 ## Contenido
 
 - [Instalación y uso](instalacion.md) — `.deb`, servicio, acceso no supervisado y actualización.

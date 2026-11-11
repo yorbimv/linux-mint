@@ -1,5 +1,7 @@
 # Problemas de RustDesk
 
+> **Estado actual: resuelto.** El 2026-11-10 se verificó la conexión con el Mac remoto: VP8, audio a 48 kHz y 30 fps. Los ajustes de vídeo se quedan aplicados; si vuelve a fallar, sigue esta guía.
+
 ## "Esperando imagen" / pantalla negra
 
 Es el fallo que más tiempo costó. La sesión conecta, se ve el cursor o el fondo, pero el vídeo nunca llega.
