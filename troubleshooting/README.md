@@ -2,6 +2,19 @@
 
 Índice de fallos que ya se resolvieron en este equipo. Si algo vuelve a pasar después de formatear, empieza por aquí.
 
+## USB y arranque
+
+| Problema                                        | Solución rápida                                                                 | Detalle |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
+| La USB no aparece al mantener `⌥`                | Reescribir la USB con Etcher o `dd`; probar el otro puerto                       | [USB](../00-preparar-usb/#si-la-usb-no-aparece-en-el-selector) |
+| La ISO no pasa la verificación SHA256            | Descarga corrupta: volver a bajarla                                              | [USB](../00-preparar-usb/#verificar-la-descarga-obligatorio) |
+| `dd: /dev/sdX: Permission denied`                | Falta `sudo` o el dispositivo es una partición (`sdb1` en vez de `sdb`)          | [USB](../00-preparar-usb/#opción-a--desde-linux-mint-la-más-fácil) |
+| El Mac arranca directo a macOS                   | Mantener `⌥` desde el encendido; resetear NVRAM con `⌘+⌥+P+R`                    | [USB](../00-preparar-usb/#4-arrancar-el-macbook-desde-la-usb) |
+| El instalador no arranca (pantalla negra)        | Probar la HWE ISO de Linux Mint                                                  | [USB](../00-preparar-usb/#si-la-usb-no-aparece-en-el-selector) |
+| Tras instalar no hay WiFi                        | Es normal: conectar Ethernet, ejecutar el paso 05 y reiniciar                    | [WiFi](../06-hardware-macbook/wifi-bcm4331.md) |
+| El instalador no crea el arranque EFI            | Particionar a mano: 512 MB FAT32 en `/boot/efi` + ext4 en `/`                   | [USB](../00-preparar-usb/#si-el-instalador-no-crea-bien-el-arranque-efi) |
+| No aparece el menú de GRUB                       | Elegir Linux Mint en el selector de arranque del Mac (`⌥`)                       | — |
+
 ## Red
 
 | Problema                                        | Solución rápida                                                                 | Detalle |
