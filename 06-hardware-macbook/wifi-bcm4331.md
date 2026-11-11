@@ -7,7 +7,13 @@ Es el punto más delicado del equipo. El driver libre `b43` funciona a medias (2
 
 ## Instalación
 
+> ⚠️ **Sin WiFi todavía:** el paquete `broadcom-sta-dkms` y sus cabeceras se descargan de internet. En una instalación nueva conecta el **cable Ethernet** (funciona de fábrica con `tg3`) y no lo desconectes hasta que `ip route get 1.1.1.1` salga por `wlp2s0`.
+
 ```bash
+# Con Ethernet conectado
+sudo apt-get update
+sudo apt-get install -y dkms linux-headers-generic-hwe-24.04
+
 sudo bash scripts/hardware/wifi-bcm4331.sh
 sudo reboot
 ```

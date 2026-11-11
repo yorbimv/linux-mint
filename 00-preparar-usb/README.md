@@ -161,27 +161,70 @@ Algunos A1278 necesitan hacer las particiones a mano. En ese caso:
 
 Y en el instalador elegir **Something else** en vez de borrar el disco. El gestor de arranque debe instalarse en `/dev/sda` (el disco interno), no en la USB.
 
-## 6. Primer arranque
+## 6. Primer arranque: actualizar e instalar el WiFi (por Ethernet)
 
-1. Deja el **cable Ethernet** conectado.
-2. Entra a Linux Mint y abre una terminal.
-3. Actualiza e instala Git:
+> ⚠️ Al terminar la instalación **no hay WiFi**: el driver BCM4331 todavía no está. La única red disponible es el **cable Ethernet**. No lo desconectes hasta que el WiFi funcione.
+
+1. Deja el **cable Ethernet** conectado y entra a Linux Mint.
+2. Abre una terminal y actualiza todo:
 
    ```bash
    sudo apt-get update
-   sudo apt-get install -y git curl
+   sudo apt-get -y upgrade
+   sudo apt-get install -y git curl dkms linux-headers-generic-hwe-24.04
    ```
 
-4. Clona este repo y ejecuta el instalador:
+3. Clona este repo (la descarga va por Ethernet):
 
    ```bash
    git clone https://github.com/yorbimv/linux-mint.git ~/Documentos/GitHub/linux-mint
    cd ~/Documentos/GitHub/linux-mint
+   ```
+
+4. Instala el driver WiFi. El paquete `broadcom-sta-dkms` **se descarga desde la web**, por eso el cable sigue conectado:
+
+   ```bash
+   ./install.sh 1     # actualizar índices y paquetes
+   ./install.sh 5     # broadcom-sta-dkms + blacklist + cargar wl
+   ```
+
+   O a mano:
+
+   ```bash
+   sudo apt-get install -y broadcom-sta-dkms
+   printf 'blacklist b43\nblacklist b43legacy\nblacklist ssb\nblacklist bcma\nblacklist brcm80211\nblacklist brcmsmac\nblacklist brcmfmac\n' \
+     | sudo tee /etc/modprobe.d/blacklist-bcm4331.conf
+   sudo update-initramfs -u
+   sudo reboot
+   ```
+
+5. Reinicia:
+
+   ```bash
+   sudo reboot
+   ```
+
+6. Comprueba que el WiFi ya existe y conéctate:
+
+   ```bash
+   lspci -k -s 02:00.0 | grep 'Kernel driver'   # debe decir: wl
+   ip -br link | grep wlp2s0
+   nmcli device wifi list
+   nmcli device wifi connect "TU-RED" password "TU-CONTRASEÑA"
+   ip route get 1.1.1.1                          # debe salir por wlp2s0
+   ```
+
+7. Cuando la ruta salga por `wlp2s0`, **desconecta el Ethernet**.
+8. Aplica el resto de la configuración:
+
+   ```bash
+   cd ~/Documentos/GitHub/linux-mint
    ./install.sh
    ```
 
-5. El paso **05-wifi** instala el driver `wl`; reinicia al terminar y ya podrás desconectar el cable.
-6. Sigue los pasos **06** a **11** para teclado, trackpad, atajos, apps y RustDesk.
+   Sigue con los pasos **06 a 11**: teclado, trackpad, atajos, apps, RustDesk y verificación.
+
+> Si `wl` no compila, el instalador cae solo al driver libre `b43`. Recuperación y diagnóstico en [06 · WiFi BCM4331](../06-hardware-macbook/wifi-bcm4331.md).
 
 ## 7. Checklist antes de formatear
 

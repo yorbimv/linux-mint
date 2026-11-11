@@ -113,27 +113,88 @@ sync && sudo eject /dev/sdb
 
 > Si el instalador no crea bien el arranque EFI, en [00 · Instalación](00-preparar-usb/#5-instalar-linux-mint) están las particiones manuales (512 MB FAT32 en `/boot/efi` + ext4 en `/`).
 
-## 5. Deja el equipo listo
+## 5. Actualiza todo (por Ethernet)
 
-Ya con Linux Mint instalado y el cable Ethernet conectado:
+> ⚠️ **Todavía no hay WiFi.** El driver BCM4331 se instala en el paso siguiente y hay que descargarlo de internet. Conecta el **cable Ethernet** (funciona sin configurar nada) y **no lo desconectes** hasta terminar el paso 6.
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y git
+sudo apt-get -y upgrade
+sudo apt-get install -y git dkms linux-headers-generic-hwe-24.04
+```
+
+## 6. Instala el driver WiFi (se descarga desde la web)
+
+El paquete `broadcom-sta-dkms` trae el driver propietario `wl` y se baja de los repositorios por Ethernet.
+
+**Opción recomendada (con este repo):**
+
+```bash
 git clone https://github.com/yorbimv/linux-mint.git ~/Documentos/GitHub/linux-mint
-cd ~/Documentos/GitHub/linux-mint && ./install.sh
+cd ~/Documentos/GitHub/linux-mint
+
+./install.sh 1     # actualizar índices y paquetes
+./install.sh 5     # instalar broadcom-sta-dkms + blacklist + cargar wl
+
+sudo reboot
+```
+
+**Opción manual:**
+
+```bash
+sudo apt-get install -y broadcom-sta-dkms
+
+printf 'blacklist b43\nblacklist b43legacy\nblacklist ssb\nblacklist bcma\nblacklist brcm80211\nblacklist brcmsmac\nblacklist brcmfmac\n' \
+  | sudo tee /etc/modprobe.d/blacklist-bcm4331.conf
+
+sudo update-initramfs -u
+sudo modprobe -r b43 b43legacy ssb bcma brcmsmac brcmfmac 2>/dev/null
+sudo modprobe wl
+sudo reboot
+```
+
+> Si `wl` no compila, el script del repo cae solo al driver libre `b43`. Detalle y recuperación sin red en [06 · WiFi BCM4331](06-hardware-macbook/wifi-bcm4331.md).
+
+## 7. Comprueba el WiFi y desconecta el cable
+
+Después del reinicio:
+
+```bash
+# Debe decir: Kernel driver in use: wl
+lspci -k -s 02:00.0 | grep 'Kernel driver'
+
+# Debe aparecer wlp2s0
+ip -br link
+
+# Conectarse a la red
+nmcli device wifi list
+nmcli device wifi connect "TU-RED" password "TU-CONTRASEÑA"
+
+# La ruta por defecto debe salir por wlp2s0
+ip route get 1.1.1.1
+```
+
+Cuando `ip route` salga por `wlp2s0`, ya puedes **desconectar el Ethernet**.
+
+## 8. Aplica el resto de la configuración
+
+Ya con WiFi:
+
+```bash
+cd ~/Documentos/GitHub/linux-mint
+./install.sh
 ```
 
 | Comando             | Qué hace                                            |
 | ------------------- | --------------------------------------------------- |
 | `./install.sh`      | Menú: elige un número, `n` = siguiente, `q` = salir  |
-| `./install.sh 5`    | Ejecuta solo el paso 5                               |
+| `./install.sh 6`    | Ejecuta solo el paso 6                               |
 | `./install.sh list` | Muestra los pasos y cuáles ya hiciste                |
 
 - Cada paso **muestra lo que va a hacer** y pide confirmación `[s/N]`.
 - Los dotfiles se enlazan uno por uno y se respalda lo que ya exista (`*.bak-<fecha>`).
 - Los pasos que necesitan `root` lo piden con `sudo` en el momento.
-- El **paso 05** instala el WiFi; al terminar, reinicia y ya puedes desconectar el cable.
+- Los pasos **01** y **05** ya quedaron hechos en el paso 6 de esta guía; `install.sh` marcará el resto.
 
 ---
 

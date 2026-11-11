@@ -20,6 +20,8 @@ Aquí está lo que se tocó del sistema base: actualizaciones, drivers, servicio
 
 ## Actualizar el sistema
 
+> ⚠️ **En una instalación nueva todavía no hay WiFi.** Conecta el cable Ethernet, actualiza y descarga el driver BCM4331 desde la web; hasta entonces la única red es el cable. Ver [06 · WiFi BCM4331](../06-hardware-macbook/wifi-bcm4331.md).
+
 ```bash
 sudo apt-get update
 sudo apt-get -y upgrade
