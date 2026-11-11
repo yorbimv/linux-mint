@@ -80,6 +80,8 @@ Debe responder `linuxmint-22.3-cinnamon-64bit.iso: OK`. Si no coincide, vuelve a
 
 Con la ISO descargada, escribe la imagen en el USB. Lo más fácil en Linux Mint es **USB Image Writer** (`mintstick`): selecciona la ISO, selecciona el USB y pulsa **Escribir**.
 
+> 🍎 **Si la creas desde macOS, usa [balenaEtcher](https://etcher.balena.io/).** En este equipo fue el único método que produjo una USB que el MacBook reconociera; otras herramientas escribían la USB pero no aparecía en el selector de arranque.
+
 Por terminal:
 
 ```bash

@@ -76,11 +76,16 @@ sudo eject /dev/sdb
 
 > ⚠️ `of=/dev/sdb` es el **disco**, no `/dev/sdb1` (la partición). Si te equivocas de dispositivo borras tus datos. Revisa dos veces `lsblk`.
 
-### Opción B — Desde macOS
+### Opción B — Desde macOS (balenaEtcher, método probado)
 
-**Interfaz gráfica:** [balenaEtcher](https://etcher.balena.io/) → *Flash from file* → elige la ISO → elige la USB → *Flash*.
+**En este equipo, balenaEtcher fue el único método que funcionó.** Con otras herramientas la USB se escribía pero el MacBook no la reconocía en el selector de arranque. Úsalo como primera opción.
 
-**Terminal:**
+1. Descarga [balenaEtcher para macOS](https://etcher.balena.io/).
+2. Abre Etcher → **Flash from file** → elige `linuxmint-22.3-cinnamon-64bit.iso`.
+3. **Select target** → elige la USB (verifica el tamaño).
+4. **Flash!** y espera a que termine y verifique la escritura.
+
+**Alternativa por terminal (puede no arrancar en este MacBook):**
 
 ```bash
 # 1. Ver los discos; identifica la USB por su tamaño (ej. disk4)
@@ -98,8 +103,12 @@ diskutil eject /dev/disk4
 ```
 
 > En macOS el dispositivo es `disk4` / `rdisk4`; no uses `disk4s1`.
+>
+> Si después de usar `dd` la USB no aparece al mantener **Option (⌥)**, vuelve a crearla con **balenaEtcher**: en este MacBook fue el método que sí arrancó.
 
 ### Opción C — Desde Windows
+
+### Opción D — Desde Windows
 
 - **Rufus**: selecciona la ISO, esquema **GPT**, destino **UEFI (no CSM)**, sistema de archivos FAT32 → *Empezar*.
 - O **balenaEtcher**, que hace lo mismo con menos preguntas.
@@ -117,7 +126,8 @@ diskutil eject /dev/disk4
 
 | Causa probable                        | Solución                                                           |
 | ------------------------------------- | ------------------------------------------------------------------ |
-| La USB no se escribió bien            | Repetir con Etcher o `dd`; comprobar que la ISO es válida          |
+| La USB no se escribió bien            | Reescribir con **balenaEtcher** (macOS) o `dd` (Linux); comprobar la ISO |
+| Creada desde macOS con otra herramienta | En este equipo solo arrancó la USB hecha con **balenaEtcher**     |
 | Puerto USB 3 problemático             | Probar el otro puerto, o una USB 2.0                                |
 | Firmware con NVRAM rara               | Reiniciar con `⌘ + ⌥ + P + R` (reset NVRAM) y volver a probar      |
 | La ISO normal no arranca en el A1278  | Probar la **HWE ISO** de Linux Mint                                 |

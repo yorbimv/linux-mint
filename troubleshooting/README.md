@@ -6,7 +6,7 @@
 
 | Problema                                        | Solución rápida                                                                 | Detalle |
 | ----------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
-| La USB no aparece al mantener `⌥`                | Reescribir la USB con Etcher o `dd`; probar el otro puerto                       | [USB](../00-preparar-usb/#si-la-usb-no-aparece-en-el-selector) |
+| La USB no aparece al mantener `⌥`                | Reescribirla con **balenaEtcher** (en macOS fue el único método que funcionó); probar el otro puerto | [USB](../00-preparar-usb/#si-la-usb-no-aparece-en-el-selector) |
 | La ISO no pasa la verificación SHA256            | Descarga corrupta: volver a bajarla                                              | [USB](../00-preparar-usb/#verificar-la-descarga-obligatorio) |
 | `dd: /dev/sdX: Permission denied`                | Falta `sudo` o el dispositivo es una partición (`sdb1` en vez de `sdb`)          | [USB](../00-preparar-usb/#opción-a--desde-linux-mint-la-más-fácil) |
 | El Mac arranca directo a macOS                   | Mantener `⌥` desde el encendido; resetear NVRAM con `⌘+⌥+P+R`                    | [USB](../00-preparar-usb/#4-arrancar-el-macbook-desde-la-usb) |
