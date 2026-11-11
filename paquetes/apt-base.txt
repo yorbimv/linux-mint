@@ -1,0 +1,17 @@
+# Paquetes base (paso 02)
+# Se instalan con apt; quita los que no quieras.
+git
+gh
+curl
+wget
+build-essential
+dkms
+linux-headers-generic-hwe-24.04
+dconf-cli
+zenity
+gnome-screenshot
+pciutils
+usbutils
+lm-sensors
+htop
+neofetch

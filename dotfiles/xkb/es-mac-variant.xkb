@@ -1,0 +1,70 @@
+// Spanish (Macintosh) -- teclado Apple Spanish ISO (MacBook Espana)
+// Mapa de teclas y simbolos Option reconstruido a partir de:
+//   com.apple.keylayout.Spanish-ISO  (macOS / AppleKeyboardLayouts)
+// Incluye level3 en Alt (Option), ya que el MacBook no tiene Alt derecho.
+// ---------------------------------------------------------------------------
+partial alphanumeric_keys
+xkb_symbols "mac" {
+    include "es(basic)"
+
+    name[Group1]= "Spanish (Macintosh)";
+
+    // fila numerica
+    key <TLDE>	{ [          less,        greater,   lessthanequal, greaterthanequal ] };
+    key <AE01>	{ [             1,          exclam,               bar,           U0131 ] };
+    key <AE02>	{ [             2,        quotedbl,                 at,           U02DD ] };
+    key <AE03>	{ [             3,  periodcentered,         numbersign,           U2022 ] };
+    key <AE04>	{ [             4,            dollar,               cent,           sterling ] };
+    key <AE05>	{ [             5,           percent,           infinity,           U2030 ] };
+    key <AE06>	{ [             6,         ampersand,            notsign,           NoSymbol ] };
+    key <AE07>	{ [             7,             slash,            division,           U2044 ] };
+    key <AE08>	{ [             8,         parenleft,  leftdoublequotemark,  leftsinglequotemark ] };
+    key <AE09>	{ [             9,        parenright, rightdoublequotemark, rightsinglequotemark ] };
+    key <AE10>	{ [             0,             equal,            notequal,           U2248 ] };
+    key <AE11>	{ [       apostrophe,          question,              acute,           cedilla ] };
+    key <AE12>	{ [       exclamdown,      questiondown,           U201A,            ogonek ] };
+
+    // fila superior
+    key <AD01>	{ [               q,                 Q,                oe,                OE ] };
+    key <AD02>	{ [               w,                 W,                ae,                AE ] };
+    key <AD03>	{ [               e,                 E,           EuroSign,           EuroSign ] };
+    key <AD04>	{ [               r,                 R,          registered,           NoSymbol ] };
+    key <AD05>	{ [               t,                 T,            dagger,          daggerdbl ] };
+    key <AD06>	{ [               y,                 Y,               yen,               yen ] };
+    key <AD07>	{ [               u,                 U,           NoSymbol,           NoSymbol ] };
+    key <AD08>	{ [               i,                 I,           NoSymbol,           NoSymbol ] };
+    key <AD09>	{ [               o,                 O,            oslash,            Oslash ] };
+    key <AD10>	{ [               p,                 P,                pi,                Pi ] };
+    key <AD11>	{ [      dead_grave,   dead_circumflex,        bracketleft,           U02C6 ] };
+    key <AD12>	{ [            plus,           asterisk,       bracketright,         plusminus ] };
+
+    // fila central
+    key <AC01>	{ [               a,                 A,             aring,             Aring ] };
+    key <AC02>	{ [               s,                 S,          integral,           NoSymbol ] };
+    key <AC03>	{ [               d,                 D,       partialdiff,           U2206 ] };
+    key <AC04>	{ [               f,                 F,            florin,           UFB01 ] };
+    key <AC05>	{ [               g,                 G,            UF8FF,           UFB02 ] };
+    key <AC06>	{ [               h,                 H,         trademark,           NoSymbol ] };
+    key <AC07>	{ [               j,                 J,         paragraph,           U00AF ] };
+    key <AC08>	{ [               k,                 K,           section,           U02C7 ] };
+    key <AC09>	{ [               l,                 L,           NoSymbol,           U02D8 ] };
+    key <AC10>	{ [           ntilde,            Ntilde,        dead_tilde,           U02DC ] };
+    key <AC11>	{ [       dead_acute,    dead_diaeresis,         braceleft,       guillemotleft ] };
+    key <BKSL>	{ [         ccedilla,          Ccedilla,        braceright,      guillemotright ] };
+
+    // fila inferior
+    key <LSGT>	{ [        masculine,       ordfeminine,          backslash,            degree ] };
+    key <AB01>	{ [               z,                 Z,             Omega,           U2039 ] };
+    key <AB02>	{ [               x,                 X,           U2211,           U203A ] };
+    key <AB03>	{ [               c,                 C,         copyright,           NoSymbol ] };
+    key <AB04>	{ [               v,                 V,           radical,           U25CA ] };
+    key <AB05>	{ [               b,                 B,            ssharp,           NoSymbol ] };
+    key <AB06>	{ [               n,                 N,           NoSymbol,           U02D9 ] };
+    key <AB07>	{ [               m,                 M,                mu,           U02DA ] };
+    key <AB08>	{ [           comma,         semicolon,           U201E,           NoSymbol ] };
+    key <AB09>	{ [          period,             colon,           U2026,           U2026 ] };
+    key <AB10>	{ [           minus,        underscore,           U2013,           U2014 ] };
+
+    // Option (Alt) como Level3
+    include "level3(lalt_switch)"
+};

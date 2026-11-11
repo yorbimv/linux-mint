@@ -1,0 +1,27 @@
+# Aplicaciones y utilidades extra (paso 09)
+# Todas están instaladas en este equipo.
+
+# Utilidades del sistema
+7zip
+baobab            # analizador de uso de disco
+bulky             # renombrar archivos en lote
+file-roller       # gestor de archivos comprimidos
+ffmpegthumbnailer # miniaturas de vídeo en Nemo
+exfat-fuse        # leer/escribir tarjetas exFAT
+exfatprogs        # herramientas exFAT
+ntfs-3g           # leer/escribir discos NTFS
+
+# Multimedia
+celluloid         # reproductor de vídeo (MPV)
+drawing           # editor de imágenes sencillo
+pix               # visor de fotos
+hypnotix          # TV por internet (IPTV)
+
+# Sistema y red
+timeshift         # copias de seguridad del sistema
+warpinator        # compartir archivos en la red local
+webapp-manager    # crear "apps" de sitios web
+neofetch          # resumen del sistema en la terminal
+
+# Opcionales que puedes añadir a mano (no instalados por defecto):
+# tree ripgrep htop gparted vlc gimp

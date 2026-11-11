@@ -1,0 +1,2 @@
+brave-browser-release.list
+official-package-repositories.list

@@ -1,0 +1,140 @@
+# Teclado Mac español
+
+> Apple Internal Keyboard / Trackpad · variante propia `es(mac)` · `⌘` = Ctrl · `Option` = AltGr
+
+El teclado del MacBook es un **Apple Spanish ISO**: las teclas físicas no coinciden con la distribución `es` estándar de Linux. La solución fue crear una variante de teclado que copia el mapa de macOS (`com.apple.keylayout.Spanish-ISO`).
+
+## Qué se instaló
+
+| Pieza                                   | Contenido                                                        |
+| --------------------------------------- | ---------------------------------------------------------------- |
+| `/usr/share/X11/xkb/symbols/es`         | Bloque `xkb_symbols "mac"` añadido al final                        |
+| `/usr/share/X11/xkb/rules/evdev.xml`    | Entrada `mac` dentro del layout `es` (para el menú gráfico)       |
+| `/usr/share/X11/xkb/rules/evdev.lst`    | Variante `mac` listada                                            |
+| `/usr/share/X11/xkb/rules/base.lst`     | Variante `mac` listada                                            |
+| `/etc/default/keyboard`                 | `XKBLAYOUT="es"`, `XKBVARIANT="mac"`                              |
+| Cinnamon `input-sources`                | `[('xkb', 'es+mac')]`                                             |
+
+Copia de la variante: [`dotfiles/xkb/es-mac-variant.xkb`](../dotfiles/xkb/es-mac-variant.xkb).
+Script instalador: [`scripts/hardware/wifi-helper/instalar-teclado-mac.sh`](../scripts/hardware/wifi-helper/instalar-teclado-mac.sh).
+
+## Instalar / reinstalar
+
+```bash
+sudo bash scripts/hardware/wifi-helper/instalar-teclado-mac.sh
+```
+
+El script es idempotente: si la variante ya existe, no la duplica; solo actualiza las entradas del menú y `/etc/default/keyboard`. Antes de tocar nada crea respaldos `.bak.<fecha>`.
+
+Después, aplicar en la sesión actual:
+
+```bash
+setxkbmap -layout es -variant mac -option terminate:ctrl_alt_bksp -option ctrl:swap_lwin_lctl
+gsettings set org.cinnamon.desktop.input-sources sources "[('xkb', 'es+mac')]"
+```
+
+O cerrar sesión y volver a entrar.
+
+## Cómo funciona
+
+### ⌘ Command = Ctrl
+
+La opción `ctrl:swap_lwin_lctl` intercambia la tecla **Command** (Super izquierda) con **Ctrl izquierdo**. Así `⌘C`, `⌘V`, `⌘Q` funcionan como en macOS.
+
+### Option = AltGr (Level3)
+
+El MacBook **no tiene Alt derecho**. Para poder escribir `@`, `#`, `€`… con `Option`, la variante incluye al final:
+
+```xkb
+include "level3(lalt_switch)"
+```
+
+Eso hace que **Option izquierdo** sea el modificador de tercer nivel (*Level3*), igual que AltGr en un teclado PC. Por eso `Alt+Tab` deja de funcionar y el cambio de ventana se movió a `⌘Tab` (ver [atajos](../04-productividad/atajos.md)).
+
+### Símbolos Option
+
+| Tecla física | Normal | Shift | Option | Option+Shift |
+| ------------ | ------ | ----- | ------ | ------------ |
+| `1`          | 1      | !     | `\|`   | `ı`          |
+| `2`          | 2      | "     | `@`    | `˝`          |
+| `3`          | 3      | ·     | `#`    | `•`          |
+| `4`          | 4      | $     | `¢`    | `£`          |
+| `5`          | 5      | %     | `∞`    | `‰`          |
+| `6`          | 6      | &     | `¬`    | —            |
+| `7`          | 7      | /     | `÷`    | `⁄`          |
+| `8`          | 8      | (     | `“`    | `‘`          |
+| `9`          | 9      | )     | `”`    | `’`          |
+| `0`          | 0      | =     | `≠`    | `≈`          |
+| `e`          | e      | E     | `€`    | `€`          |
+| `+`          | +      | *     | `]`    | `±`          |
+| `'`          | '      | ?     | `´`    | `¸`          |
+
+El mapa completo está en el archivo de la variante. Está reconstruido a partir del layout de macOS, así que los símbolos coinciden con las leyendas impresas en las teclas.
+
+> Nota: el trackpad y el teclado comparten el mismo dispositivo USB (`Apple Inc. Apple Internal Keyboard / Trackpad`); no hay que configurar nada extra para que el teclado funcione.
+
+## Verificar
+
+```bash
+setxkbmap -query
+# layout: es
+# variant: mac
+# options: terminate:ctrl_alt_bksp,ctrl:swap_lwin_lctl
+
+gsettings get org.cinnamon.desktop.input-sources sources
+# [('xkb', 'es+mac')]
+
+grep -E '^XKB' /etc/default/keyboard
+```
+
+Prueba rápida en una terminal o editor:
+
+| Combinación | Debe escribir |
+| ----------- | ------------- |
+| `⌥2`        | `@`           |
+| `⌥3`        | `#`           |
+| `⌥e`        | `€`           |
+| `⌘C`        | copiar        |
+| `⌘Q`        | cerrar ventana|
+
+## Se perdió después de actualizar
+
+Las actualizaciones de **`xkb-data`** reescriben `/usr/share/X11/xkb/symbols/es` y borran el bloque `mac`. Solución:
+
+```bash
+sudo bash scripts/hardware/wifi-helper/instalar-teclado-mac.sh
+setxkbmap -layout es -variant mac -option terminate:ctrl_alt_bksp -option ctrl:swap_lwin_lctl
+```
+
+Si el menú gráfico ya no muestra la variante, el script también la vuelve a registrar. Es el primer paso de la lista de verificación tras un `apt upgrade` grande.
+
+## Volver al teclado estándar
+
+```bash
+setxkbmap -layout es
+gsettings set org.cinnamon.desktop.input-sources sources "[('xkb', 'es')]"
+```
+
+Y editar `/etc/default/keyboard` para quitar `XKBVARIANT="mac"` (hay respaldos `.bak.*`).
+
+## Problemas
+
+| Síntoma                                   | Solución                                                          |
+| ----------------------------------------- | ----------------------------------------------------------------- |
+| `⌥2` escribe `"` en vez de `@`            | La variante no está activa: `setxkbmap -query` y reinstalar        |
+| `⌘` no copia/pega                         | Falta `ctrl:swap_lwin_lctl` en las opciones                        |
+| `Alt+Tab` no cambia de ventana            | Es normal: usar `⌘Tab`                                            |
+| Acentos raros o teclas muertas            | Revisar que la variante sea `es(mac)`, no `es` a secas             |
+| Tras actualizar, todo vuelve al layout PC | `xkb-data` borró el bloque: reinstalar la variante                |
+| El menú de Cinnamon no lista "Macintosh"  | Faltan las entradas en `evdev.xml`/`evdev.lst`: reinstalar         |
+
+## Desinstalar
+
+```bash
+sudo cp -a /usr/share/X11/xkb/symbols/es.bak.* /usr/share/X11/xkb/symbols/es 2>/dev/null
+sudo cp -a /usr/share/X11/xkb/rules/evdev.xml.bak.* /usr/share/X11/xkb/rules/evdev.xml 2>/dev/null
+sudo cp -a /etc/default/keyboard.bak.* /etc/default/keyboard 2>/dev/null
+setxkbmap -layout es
+```
+
+(Los respaldos son los que crea el instalador con la fecha de instalación.)

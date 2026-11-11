@@ -1,0 +1,3 @@
+av1-test = 'N'
+codec-preference = 'vp8'
+use-texture-render = 'N'

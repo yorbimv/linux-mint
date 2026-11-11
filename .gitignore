@@ -1,0 +1,18 @@
+# Respaldos creados por los scripts
+*.bak-*
+*.bak.*
+*.orig
+*~
+
+# Logs
+*.log
+
+# Basura del sistema
+.cache/
+.DS_Store
+Thumbs.db
+
+# Datos que pueden ser privados.
+# Descomenta si NO quieres publicarlos en GitHub:
+# dotfiles/rustdesk/*.toml
+# dotfiles/sistema/
