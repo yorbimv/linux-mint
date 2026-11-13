@@ -18,6 +18,7 @@ MODO="${1:-aplicar}"
 if [[ "$MODO" == "--revertir" ]]; then
     pkill -x xcape 2>/dev/null || true
     rm -f "$HOME/.config/autostart/xcape-cmd-menu.desktop"
+    gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true
     gsettings set $WM close                     "['<Alt>F4']"
     gsettings set $WM minimize                  "@as []"
     gsettings set $WM switch-windows            "['<Alt>Tab']"
@@ -45,6 +46,10 @@ else
     echo "  Cmd+Shift+M  maximizar / restaurar"
     echo "  Cmd+Tab      cambiar de ventana (Shift+Cmd+Tab al reves)"
     echo "  Cmd+Izq/Der  ventana a la mitad izquierda/derecha"
+
+    # Un toque de Cmd equivale a pulsar Control: desactiva el circulo de
+    # "localizar el puntero" que Cinnamon dibuja al pulsar Ctrl solo.
+    gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false
 
     # La tecla Cmd emite Control_L. Con xcape, un TOQUE de Cmd envia Super_L
     # (abre/cierra el menu) y, si se mantiene pulsada, sigue siendo Ctrl

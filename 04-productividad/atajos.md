@@ -95,6 +95,12 @@ xcape -e 'Control_L=Super_L'
 - **Toque de ⌘** → envía `Super_L` → abre/cierra el menú.
 - **Mantener ⌘** → sigue siendo `Ctrl` → `⌘C`, `⌘V`, `⌘Q` funcionan igual.
 
+> El círculo que aparece alrededor del puntero al tocar ⌘ es la accesibilidad **“localizar el puntero”**, que Cinnamon activa al pulsar Ctrl solo. El script la desactiva con:
+>
+> ```bash
+> gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false
+> ```
+
 `atajos-mac.sh` instala xcape y crea el autostart `~/.config/autostart/xcape-cmd-menu.desktop` para que arranque con la sesión. Para desactivarlo:
 
 ```bash

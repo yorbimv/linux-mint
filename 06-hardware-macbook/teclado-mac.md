@@ -109,6 +109,8 @@ xcape -e 'Control_L=Super_L'
 - **Toque de ⌘** → envía `Super_L` → abre/cierra el menú.
 - **Mantener ⌘** + otra tecla → sigue siendo `Ctrl` → atajos de siempre.
 
+> Si al tocar ⌘ aparece un **círculo alrededor del puntero**, es la opción de accesibilidad “localizar el puntero” (se activa con Ctrl solo). Se apaga con `gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false`; el script de atajos ya lo hace.
+
 Se instala con [`dotfiles/cinnamon/atajos-mac.sh`](../dotfiles/cinnamon/atajos-mac.sh) (paso `08-cinnamon`), que también crea el autostart de la sesión.
 
 ## Se perdió después de actualizar
