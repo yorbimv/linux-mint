@@ -1,6 +1,6 @@
 # 06 · Hardware MacBook
 
-El MacBook Pro A1278 (2012) necesita ajustes especiales en Linux. Esta sección documenta los tres que dieron más guerra: **WiFi Broadcom**, **teclado español de Apple** y **trackpad**.
+El MacBook Pro A1278 (2012) necesita ajustes especiales en Linux. Esta sección documenta los cuatro que dieron más guerra: **WiFi Broadcom**, **teclado español de Apple**, **trackpad** y el **LED óptico del jack de audífonos**.
 
 ## Estado del hardware
 
@@ -14,12 +14,14 @@ El MacBook Pro A1278 (2012) necesita ajustes especiales en Linux. Esta sección 
 | Cámara (iSight)   | Apple FaceTime HD                    | funciona con `uvcvideo`            |
 | Lector SD         | Apple SD Card Reader                 | funciona                           |
 | Batería           | `BAT0`                               | ~29 % de capacidad (desgastada)    |
+| Audio             | Cirrus Logic CS4206                  | altavoces, audífonos y LED óptico controlado |
 
 ## Contenido
 
 - [WiFi BCM4331](wifi-bcm4331.md) — driver `wl`, DKMS, 5 GHz y recuperación.
 - [Teclado Mac español](teclado-mac.md) — variante `es(mac)` y símbolos Option.
 - [Trackpad](trackpad.md) — clic derecho a dos dedos y gestos.
+- [LED rojo del jack](led-optico.md) — transmisor óptico S/PDIF y cómo apagarlo.
 
 ## Batería
 

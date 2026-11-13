@@ -38,6 +38,15 @@
 | El cursor salta al escribir                      | Activar `disable-while-typing`                                                   | [Trackpad](../06-hardware-macbook/trackpad.md) |
 | El trackpad no responde tras suspender           | `sudo modprobe -r bcm5974 && sudo modprobe bcm5974`                              | [Trackpad](../06-hardware-macbook/trackpad.md) |
 
+## Audio
+
+| Problema                                        | Solución rápida                                                                 | Detalle |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
+| LED rojo fijo dentro del jack de audífonos       | No es una falla: es el láser óptico S/PDIF. `sudo bash scripts/hardware/apagar-led-optico.sh --instalar` | [LED óptico](../06-hardware-macbook/led-optico.md) |
+| El LED vuelve a encenderse al reiniciar          | El autostart no corrió: `sudo -n /usr/local/lib/linux-mint/apagar-led-optico.sh` | [LED óptico](../06-hardware-macbook/led-optico.md#solución-permanente) |
+| No se oye nada con audífonos conectados          | `alsamixer` → `F6` → CS4206 → subir **Headphone**; o `pavucontrol`               | [LED óptico](../06-hardware-macbook/led-optico.md) |
+| El audio sale por HDMI u óptico en vez de bocinas | `pactl set-card-profile alsa_card.pci-0000_00_1b.0 output:analog-stereo+input:analog-stereo` | [LED óptico](../06-hardware-macbook/led-optico.md) |
+
 ## Escritorio
 
 | Problema                                        | Solución rápida                                                                 | Detalle |

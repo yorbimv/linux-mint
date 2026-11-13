@@ -222,7 +222,7 @@ Y en el instalador elegir **Something else** en vez de borrar el disco. El gesto
    ./install.sh
    ```
 
-   Sigue con los pasos **06 a 11**: teclado, trackpad, atajos, apps, RustDesk y verificación.
+   Sigue con los pasos **06 a 12**: teclado, trackpad, atajos, apps, RustDesk, verificación y apagado del LED óptico del jack.
 
 > Si `wl` no compila, el instalador cae solo al driver libre `b43`. Recuperación y diagnóstico en [06 · WiFi BCM4331](../06-hardware-macbook/wifi-bcm4331.md).
 
