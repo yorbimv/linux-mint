@@ -23,9 +23,13 @@ Los movimientos de ventana usan **solo ⌘**. La tecla física **Ctrl** quedó l
 | Atajo                  | Acción                                |
 | ---------------------- | ------------------------------------- |
 | `Ctrl+←` / `Ctrl+→`    | Escritorio anterior / siguiente       |
+| `Ctrl+Shift+←/→`       | Mover la ventana activa al escritorio anterior / siguiente |
+| `⌘+Ctrl+←/→`           | Mover la ventana al monitor izquierdo / derecho |
 | `⌘+Alt+←/→`            | Alternativa para cambiar de escritorio |
 
 > En este equipo la tecla física **Ctrl** emite `Super`, así que `Ctrl+flechas` es en realidad `Super+flechas`. El intercambio `ctrl:swap_lwin_lctl` deja ⌘ como `Control`; por eso `⌘+flechas` mueve ventanas y `Ctrl+flechas` cambia de escritorio.
+>
+> La combinación antigua `⌘+Shift+Option+flechas` **no funcionaba** en este teclado: Option emite `ISO_Level3_Shift`, no `Alt`, y Cinnamon esperaba `Alt`. Por eso mover ventanas de escritorio usa `Ctrl+Shift+flechas`.
 
 Se aplican con:
 

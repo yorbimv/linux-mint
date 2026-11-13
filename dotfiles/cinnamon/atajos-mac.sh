@@ -60,6 +60,14 @@ if [[ "$MODO" == "--revertir" ]]; then
     gsettings set $WM switch-to-workspace-right "['<Control><Alt>Right']"
     gsettings set $WM switch-to-workspace-up    "['<Control><Alt>Up', '<Alt>F1']"
     gsettings set $WM switch-to-workspace-down  "['<Control><Alt>Down']"
+    gsettings set $WM move-to-workspace-left    "['<Control><Shift><Alt>Left']"
+    gsettings set $WM move-to-workspace-right   "['<Control><Shift><Alt>Right']"
+    gsettings set $WM move-to-workspace-up      "['<Control><Shift><Alt>Up']"
+    gsettings set $WM move-to-workspace-down    "['<Control><Shift><Alt>Down']"
+    gsettings set $WM move-to-monitor-left      "['<Super><Shift>Left']"
+    gsettings set $WM move-to-monitor-right     "['<Super><Shift>Right']"
+    gsettings set $WM move-to-monitor-up        "['<Super><Shift>Up']"
+    gsettings set $WM move-to-monitor-down      "['<Super><Shift>Down']"
     gsettings set $WM toggle-maximized          "['<Alt>F10']"
     echo "Atajos de ventana restaurados a los valores originales de Cinnamon."
 else
@@ -82,6 +90,16 @@ else
     gsettings set $WM switch-to-workspace-right "['<Super>Right', '<Control><Alt>Right']"
     gsettings set $WM switch-to-workspace-up    "['<Super>Up', '<Control><Alt>Up', '<Alt>F1']"
     gsettings set $WM switch-to-workspace-down  "['<Super>Down', '<Control><Alt>Down']"
+    # Ctrl fisico + Shift + flechas: mover la ventana activa a otro escritorio.
+    gsettings set $WM move-to-workspace-left  "['<Super><Shift>Left']"
+    gsettings set $WM move-to-workspace-right "['<Super><Shift>Right']"
+    gsettings set $WM move-to-workspace-up    "['<Super><Shift>Up']"
+    gsettings set $WM move-to-workspace-down  "['<Super><Shift>Down']"
+    # Cmd + Ctrl fisico + flechas: mover la ventana a otro monitor.
+    gsettings set $WM move-to-monitor-left  "['<Control><Super>Left']"
+    gsettings set $WM move-to-monitor-right "['<Control><Super>Right']"
+    gsettings set $WM move-to-monitor-up    "['<Control><Super>Up']"
+    gsettings set $WM move-to-monitor-down  "['<Control><Super>Down']"
     # Cmd+Shift+M maximizar / restaurar
     gsettings set $WM toggle-maximized          "['<Shift><Control>m','<Alt>F10']"
     echo "Atajos estilo macOS aplicados:"
@@ -92,6 +110,8 @@ else
     echo "  Cmd+Izq/Der  ventana a la mitad izquierda/derecha"
     echo "  Cmd+Arriba/Abajo  ventana arriba/abajo"
     echo "  Ctrl+Izq/Der  cambiar de escritorio"
+    echo "  Ctrl+Shift+Izq/Der  mover la ventana a otro escritorio"
+    echo "  Cmd+Ctrl+Izq/Der    mover la ventana a otro monitor"
 
     # Ctrl fisico emite Super_L: se usa para "localizar el puntero" y NO
     # para abrir el menu.
@@ -125,6 +145,6 @@ fi
 
 echo
 echo "Valores actuales:"
-for k in close minimize toggle-maximized switch-windows switch-windows-backward push-tile-left push-tile-right push-tile-up push-tile-down switch-to-workspace-left switch-to-workspace-right switch-to-workspace-up switch-to-workspace-down; do
+for k in close minimize toggle-maximized switch-windows switch-windows-backward push-tile-left push-tile-right push-tile-up push-tile-down switch-to-workspace-left switch-to-workspace-right switch-to-workspace-up switch-to-workspace-down move-to-workspace-left move-to-workspace-right move-to-monitor-left move-to-monitor-right; do
     printf "  %-28s %s\n" "$k" "$(gsettings get $WM $k)"
 done

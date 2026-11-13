@@ -42,6 +42,7 @@
 | Ctrl abre el menú en vez de localizar el puntero | `bash dotfiles/cinnamon/atajos-mac.sh` (menú en `Menu`, círculo en `Super_L`) | [Atajos](../04-productividad/atajos.md#un-toque-de--abre-el-menú-xcape) |
 | Ctrl mueve/azulea la ventana en vez de cambiar de escritorio | Reaplicar `bash dotfiles/cinnamon/atajos-mac.sh` (quita `<Super>` de los atajos de ventana) | [Atajos](../04-productividad/atajos.md#escritorios) |
 | Ctrl+flechas no cambia de escritorio             | `gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-right "['<Super>Right']"` | [Teclado](../06-hardware-macbook/teclado-mac.md#mover-ventanas-y-cambiar-de-escritorio) |
+| No puedo pasar una ventana a otro escritorio     | Usar `Ctrl+Shift+←/→`; la combinación con Option no funciona porque Option emite `ISO_Level3_Shift` | [Atajos](../04-productividad/atajos.md#escritorios) |
 
 ## Audio
 

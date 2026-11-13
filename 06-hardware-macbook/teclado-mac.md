@@ -138,9 +138,17 @@ gsettings set $WM push-tile-up    "['<Control>Up']"      # ⌘+↑
 gsettings set $WM push-tile-down  "['<Control>Down']"    # ⌘+↓
 gsettings set $WM switch-to-workspace-left  "['<Super>Left']"   # Ctrl+←
 gsettings set $WM switch-to-workspace-right "['<Super>Right']"  # Ctrl+→
+gsettings set $WM move-to-workspace-left    "['<Super><Shift>Left']"   # Ctrl+Shift+←
+gsettings set $WM move-to-workspace-right   "['<Super><Shift>Right']"  # Ctrl+Shift+→
+gsettings set $WM move-to-monitor-left      "['<Control><Super>Left']"  # ⌘+Ctrl+←
+gsettings set $WM move-to-monitor-right     "['<Control><Super>Right']" # ⌘+Ctrl+→
 ```
 
 Así **Ctrl deja de mover ventanas**: si antes `Ctrl+←` azuleaba la ventana, ahora cambia de escritorio y deja Ctrl libre para “localizar el puntero”.
+
+Para **pasar una ventana al otro escritorio**: `Ctrl+Shift+←` o `Ctrl+Shift+→`.
+
+> La combinación antigua `⌘+Shift+Option+flechas` no funciona en el teclado del MacBook: Option emite `ISO_Level3_Shift`, pero Cinnamon esperaba `Alt` (`Mod1`). Por eso se usa `Ctrl+Shift+flechas`, que sí está disponible.
 
 ## Se perdió después de actualizar
 
