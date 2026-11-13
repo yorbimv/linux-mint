@@ -37,8 +37,9 @@
 | El clic derecho abre en la esquina               | `gsettings set org.cinnamon.desktop.peripherals.touchpad click-method 'fingers'` | [Trackpad](../06-hardware-macbook/trackpad.md) |
 | El cursor salta al escribir                      | Activar `disable-while-typing`                                                   | [Trackpad](../06-hardware-macbook/trackpad.md) |
 | El trackpad no responde tras suspender           | `sudo modprobe -r bcm5974 && sudo modprobe bcm5974`                              | [Trackpad](../06-hardware-macbook/trackpad.md) |
-| El menú solo se abre con Ctrl, no con ⌘          | `pkill -x xcape; setsid -f xcape -e 'Control_L=Super_L'` o `bash dotfiles/cinnamon/atajos-mac.sh` | [Teclado](../06-hardware-macbook/teclado-mac.md#toque-de--para-abrir-el-menú) |
-| Al tocar ⌘ aparece un círculo en el puntero      | Es “localizar el puntero”: `gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false` | [Atajos](../04-productividad/atajos.md#un-toque-de--abre-el-menú-xcape) |
+| El menú no se abre con un toque de `⌘`           | xcape no corre o usa el mapeo viejo: `pkill -x xcape; setsid -f xcape -e 'Control_L=Menu'` o `bash dotfiles/cinnamon/atajos-mac.sh` | [Teclado](../06-hardware-macbook/teclado-mac.md#toque-de--para-abrir-el-menú) |
+| Al tocar ⌘ aparece un círculo en el puntero      | El círculo pertenece a Ctrl: `gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"` | [Atajos](../04-productividad/atajos.md#un-toque-de--abre-el-menú-xcape) |
+| Ctrl abre el menú en vez de localizar el puntero | `bash dotfiles/cinnamon/atajos-mac.sh` (menú en `Menu`, círculo en `Super_L`) | [Atajos](../04-productividad/atajos.md#un-toque-de--abre-el-menú-xcape) |
 
 ## Audio
 

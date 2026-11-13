@@ -70,7 +70,7 @@ Al hacer que **Option** funcione como **AltGr** (para escribir `@`, `#`, `€`�
 | Atajo             | Acción                             |
 | ----------------- | ---------------------------------- |
 | `Toque ⌘`         | Abrir / cerrar el menú (xcape)     |
-| `Super`           | Abrir el menú (tecla física Ctrl)  |
+| `Ctrl` (solo)     | Localizar el puntero (círculo)     |
 | `Super+E`         | Abrir el gestor de archivos (Nemo) |
 | `Super+L`         | Bloquear la sesión                 |
 | `Super+D`         | Mostrar el escritorio              |
@@ -85,23 +85,20 @@ El intercambio `ctrl:swap_lwin_lctl` hace que:
 - la tecla física **⌘** emita `Control_L`;
 - la tecla física **Ctrl** emita `Super_L`.
 
-Cinnamon solo acepta `Super` como tecla del menú, así que sin ayuda el menú se abriría con la tecla física **Ctrl**, no con ⌘. Para recuperar el gesto natural se usa **xcape**:
+Cinnamon solo acepta `Super` como tecla del menú, así que sin ayuda el menú se abriría con la tecla física **Ctrl**, no con ⌘. La solución usa la tecla **Menu** y **xcape**:
 
 ```bash
 sudo apt-get install -y xcape
-xcape -e 'Control_L=Super_L'
+xcape -e 'Control_L=Menu'
+gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"
+gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true
 ```
 
-- **Toque de ⌘** → envía `Super_L` → abre/cierra el menú.
-- **Mantener ⌘** → sigue siendo `Ctrl` → `⌘C`, `⌘V`, `⌘Q` funcionan igual.
+- **Toque de ⌘** → envía `Menu` → abre/cierra el menú.
+- **Mantener ⌘** + otra tecla → sigue siendo `Ctrl` → `⌘C`, `⌘V`, `⌘Q` funcionan igual.
+- **Ctrl físico solo** → `Super_L` → muestra el círculo de **localizar el puntero** y **no** abre el menú.
 
-> El círculo que aparece alrededor del puntero al tocar ⌘ es la accesibilidad **“localizar el puntero”**, que Cinnamon activa al pulsar Ctrl solo. El script la desactiva con:
->
-> ```bash
-> gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false
-> ```
-
-`atajos-mac.sh` instala xcape y crea el autostart `~/.config/autostart/xcape-cmd-menu.desktop` para que arranque con la sesión. Para desactivarlo:
+`atajos-mac.sh` también pone la tecla del menú del applet en `Menu`, porque `Control_L` y `Super_R` no funcionan como atajo del menú. Instala xcape y crea el autostart `~/.config/autostart/xcape-cmd-menu.desktop` para que arranque con la sesión. Para desactivarlo:
 
 ```bash
 ./dotfiles/cinnamon/atajos-mac.sh --revertir

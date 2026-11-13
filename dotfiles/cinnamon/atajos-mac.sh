@@ -15,9 +15,38 @@ export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 WM=org.cinnamon.desktop.keybindings.wm
 MODO="${1:-aplicar}"
 
+# Cambia la tecla que abre el menu del applet menu@cinnamon.org.
+# Se aplica en caliente por DBus y se persiste en la config del applet.
+set_overlay_key() {
+    local key="$1"
+    if command -v gdbus >/dev/null 2>&1; then
+        gdbus call --session --dest org.Cinnamon --object-path /org/Cinnamon \
+            --method org.Cinnamon.Eval \
+            "const boxes=[Main.panel._leftBox,Main.panel._centerBox,Main.panel._rightBox]; let a=null; for(const b of boxes){a=b.get_children().find(c=>c._uuid==='menu@cinnamon.org'); if(a)break;} if(a&&a._delegate){a._delegate.settings.setValue('overlay-key','$key'); a._delegate._updateKeybinding();}" \
+            >/dev/null 2>&1 || true
+    fi
+    # Respaldo por si Cinnamon no estaba corriendo: editar el JSON del applet.
+    python3 - "$HOME/.config/cinnamon/spices/menu@cinnamon.org" "$key" <<'PY' 2>/dev/null || true
+import glob, json, os, sys
+carpeta, key = sys.argv[1], sys.argv[2]
+for f in glob.glob(os.path.join(carpeta, "*.json")):
+    try:
+        with open(f, encoding="utf-8") as fh:
+            data = json.load(fh)
+        if "overlay-key" in data:
+            data["overlay-key"]["value"] = key
+            with open(f, "w", encoding="utf-8") as fh:
+                json.dump(data, fh, indent=4, ensure_ascii=False)
+    except Exception:
+        pass
+PY
+}
+
 if [[ "$MODO" == "--revertir" ]]; then
     pkill -x xcape 2>/dev/null || true
     rm -f "$HOME/.config/autostart/xcape-cmd-menu.desktop"
+    set_overlay_key 'Super_L::Super_R'
+    gsettings set org.cinnamon.muffin locate-pointer-key "['Control_L']"
     gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true
     gsettings set $WM close                     "['<Alt>F4']"
     gsettings set $WM minimize                  "@as []"
@@ -47,13 +76,15 @@ else
     echo "  Cmd+Tab      cambiar de ventana (Shift+Cmd+Tab al reves)"
     echo "  Cmd+Izq/Der  ventana a la mitad izquierda/derecha"
 
-    # Un toque de Cmd equivale a pulsar Control: desactiva el circulo de
-    # "localizar el puntero" que Cinnamon dibuja al pulsar Ctrl solo.
-    gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false
+    # Ctrl fisico emite Super_L: se usa para "localizar el puntero" y NO
+    # para abrir el menu.
+    gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true
+    gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"
 
-    # La tecla Cmd emite Control_L. Con xcape, un TOQUE de Cmd envia Super_L
-    # (abre/cierra el menu) y, si se mantiene pulsada, sigue siendo Ctrl
-    # para Cmd+C, Cmd+V, Cmd+Q, etc.
+    # La tecla Cmd emite Control_L. Con xcape, un TOQUE de Cmd envia la tecla
+    # Menu (que abre/cierra el menu) y, si se mantiene pulsada, sigue siendo
+    # Ctrl para Cmd+C, Cmd+V, Cmd+Q, etc.
+    set_overlay_key 'Menu'
     if command -v xcape >/dev/null 2>&1; then
         mkdir -p "$HOME/.config/autostart"
         cat > "$HOME/.config/autostart/xcape-cmd-menu.desktop" <<'DESKTOP'
@@ -61,14 +92,15 @@ else
 Type=Application
 Name=Cmd abre el menu
 Comment=Un toque de Cmd abre el menu; mantenerla la usa como Ctrl
-Exec=xcape -e Control_L=Super_L
+Exec=xcape -e Control_L=Menu
 Terminal=false
 NoDisplay=true
 X-GNOME-Autostart-enabled=true
 DESKTOP
         pkill -x xcape 2>/dev/null || true
-        setsid -f xcape -e 'Control_L=Super_L' >/dev/null 2>&1
+        setsid -f xcape -e 'Control_L=Menu' >/dev/null 2>&1
         echo "  Toque de Cmd  abre/cierra el menu (mantener = Ctrl)"
+        echo "  Ctrl (fisico) localiza el puntero"
     else
         echo "  (xcape no instalado: sudo apt-get install -y xcape)"
     fi

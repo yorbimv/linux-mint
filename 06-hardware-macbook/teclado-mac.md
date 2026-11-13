@@ -99,17 +99,23 @@ Prueba rápida en una terminal o editor:
 
 ## Toque de ⌘ para abrir el menú
 
-El intercambio `ctrl:swap_lwin_lctl` deja `Super_L` en la **tecla física Ctrl**, y Cinnamon solo abre el menú con `Super`. Para que un **toque de ⌘** abra el menú sin perder `⌘C`/`⌘V`, se usa **xcape**:
+El intercambio `ctrl:swap_lwin_lctl` deja `Super_L` en la **tecla física Ctrl**, y Cinnamon solo abre el menú con `Super`. Para que un **toque de ⌘** abra el menú sin perder `⌘C`/`⌘V`, se usa **xcape** con la tecla `Menu`:
 
 ```bash
 sudo apt-get install -y xcape
-xcape -e 'Control_L=Super_L'
+xcape -e 'Control_L=Menu'
 ```
 
-- **Toque de ⌘** → envía `Super_L` → abre/cierra el menú.
+- **Toque de ⌘** → envía `Menu` → abre/cierra el menú.
 - **Mantener ⌘** + otra tecla → sigue siendo `Ctrl` → atajos de siempre.
+- **Ctrl físico solo** (`Super_L`) → círculo de **localizar el puntero**, sin abrir el menú.
 
-> Si al tocar ⌘ aparece un **círculo alrededor del puntero**, es la opción de accesibilidad “localizar el puntero” (se activa con Ctrl solo). Se apaga con `gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer false`; el script de atajos ya lo hace.
+La tecla del menú del applet se configura en `Menu` (ni `Control_L` ni `Super_R` funcionan para eso). Además se ajusta `locate-pointer-key` a `Super_L` para que el círculo siga respondiendo a Ctrl:
+
+```bash
+gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"
+gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true
+```
 
 Se instala con [`dotfiles/cinnamon/atajos-mac.sh`](../dotfiles/cinnamon/atajos-mac.sh) (paso `08-cinnamon`), que también crea el autostart de la sesión.
 
@@ -139,7 +145,8 @@ Y editar `/etc/default/keyboard` para quitar `XKBVARIANT="mac"` (hay respaldos `
 | ----------------------------------------- | ----------------------------------------------------------------- |
 | `⌥2` escribe `"` en vez de `@`            | La variante no está activa: `setxkbmap -query` y reinstalar        |
 | `⌘` no copia/pega                         | Falta `ctrl:swap_lwin_lctl` en las opciones                        |
-| El menú no se abre con un toque de `⌘`    | xcape no corre: `pkill -x xcape; setsid -f xcape -e 'Control_L=Super_L'` |
+| El menú no se abre con un toque de `⌘`    | xcape no corre o usa el mapeo viejo: `pkill -x xcape; setsid -f xcape -e 'Control_L=Menu'` |
+| Ctrl no muestra el círculo del puntero    | `gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"` y `gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true` |
 | `Alt+Tab` no cambia de ventana            | Es normal: usar `⌘Tab`                                            |
 | Acentos raros o teclas muertas            | Revisar que la variante sea `es(mac)`, no `es` a secas             |
 | Tras actualizar, todo vuelve al layout PC | `xkb-data` borró el bloque: reinstalar la variante                |
