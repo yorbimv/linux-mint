@@ -40,6 +40,8 @@
 | El menú no se abre con un toque de `⌘`           | xcape no corre o usa el mapeo viejo: `pkill -x xcape; setsid -f xcape -e 'Control_L=Menu'` o `bash dotfiles/cinnamon/atajos-mac.sh` | [Teclado](../06-hardware-macbook/teclado-mac.md#toque-de--para-abrir-el-menú) |
 | Al tocar ⌘ aparece un círculo en el puntero      | El círculo pertenece a Ctrl: `gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"` | [Atajos](../04-productividad/atajos.md#un-toque-de--abre-el-menú-xcape) |
 | Ctrl abre el menú en vez de localizar el puntero | `bash dotfiles/cinnamon/atajos-mac.sh` (menú en `Menu`, círculo en `Super_L`) | [Atajos](../04-productividad/atajos.md#un-toque-de--abre-el-menú-xcape) |
+| Ctrl mueve/azulea la ventana en vez de cambiar de escritorio | Reaplicar `bash dotfiles/cinnamon/atajos-mac.sh` (quita `<Super>` de los atajos de ventana) | [Atajos](../04-productividad/atajos.md#escritorios) |
+| Ctrl+flechas no cambia de escritorio             | `gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-right "['<Super>Right']"` | [Teclado](../06-hardware-macbook/teclado-mac.md#mover-ventanas-y-cambiar-de-escritorio) |
 
 ## Audio
 

@@ -119,6 +119,29 @@ gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true
 
 Se instala con [`dotfiles/cinnamon/atajos-mac.sh`](../dotfiles/cinnamon/atajos-mac.sh) (paso `08-cinnamon`), que también crea el autostart de la sesión.
 
+## Mover ventanas y cambiar de escritorio
+
+El intercambio deja dos teclas con funciones distintas:
+
+| Tecla física | Emite      | Para qué se usa                                  |
+| ------------ | ---------- | ------------------------------------------------ |
+| **⌘**        | `Control_L` | Mover/azulear ventanas (`⌘+flechas`), copiar, etc. |
+| **Ctrl**     | `Super_L`   | Cambiar de escritorio (`Ctrl+flechas`) y localizar el puntero |
+
+Por eso los atajos de ventana usan solo `<Control>` y los de escritorio solo `<Super>`:
+
+```bash
+WM=org.cinnamon.desktop.keybindings.wm
+gsettings set $WM push-tile-left  "['<Control>Left']"    # ⌘+←
+gsettings set $WM push-tile-right "['<Control>Right']"   # ⌘+→
+gsettings set $WM push-tile-up    "['<Control>Up']"      # ⌘+↑
+gsettings set $WM push-tile-down  "['<Control>Down']"    # ⌘+↓
+gsettings set $WM switch-to-workspace-left  "['<Super>Left']"   # Ctrl+←
+gsettings set $WM switch-to-workspace-right "['<Super>Right']"  # Ctrl+→
+```
+
+Así **Ctrl deja de mover ventanas**: si antes `Ctrl+←` azuleaba la ventana, ahora cambia de escritorio y deja Ctrl libre para “localizar el puntero”.
+
 ## Se perdió después de actualizar
 
 Las actualizaciones de **`xkb-data`** reescriben `/usr/share/X11/xkb/symbols/es` y borran el bloque `mac`. Solución:
@@ -148,6 +171,8 @@ Y editar `/etc/default/keyboard` para quitar `XKBVARIANT="mac"` (hay respaldos `
 | El menú no se abre con un toque de `⌘`    | xcape no corre o usa el mapeo viejo: `pkill -x xcape; setsid -f xcape -e 'Control_L=Menu'` |
 | Ctrl no muestra el círculo del puntero    | `gsettings set org.cinnamon.muffin locate-pointer-key "['Super_L']"` y `gsettings set org.cinnamon.desktop.peripherals.mouse locate-pointer true` |
 | `Alt+Tab` no cambia de ventana            | Es normal: usar `⌘Tab`                                            |
+| Ctrl mueve la ventana en vez de cambiar de escritorio | Reaplicar: `bash dotfiles/cinnamon/atajos-mac.sh` (los atajos de ventana llevan `<Super>` de más) |
+| Ctrl+flechas no cambia de escritorio      | `gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-right "['<Super>Right']"` |
 | Acentos raros o teclas muertas            | Revisar que la variante sea `es(mac)`, no `es` a secas             |
 | Tras actualizar, todo vuelve al layout PC | `xkb-data` borró el bloque: reinstalar la variante                |
 | El menú de Cinnamon no lista "Macintosh"  | Faltan las entradas en `evdev.xml`/`evdev.lst`: reinstalar         |

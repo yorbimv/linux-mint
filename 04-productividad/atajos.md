@@ -14,6 +14,18 @@ La tecla **⌘ (Command)** del MacBook se reasignó a **Ctrl**, y **Option** a *
 | `⌘Tab`           | Cambiar de ventana                       | `switch-windows`         |
 | `⌘⇧Tab`          | Cambiar de ventana hacia atrás            | `switch-windows-backward`|
 | `⌘←` / `⌘→`      | Ventana a la mitad izquierda / derecha    | `push-tile-left/right`   |
+| `⌘↑` / `⌘↓`      | Ventana arriba / abajo                    | `push-tile-up/down`      |
+
+Los movimientos de ventana usan **solo ⌘**. La tecla física **Ctrl** quedó libre para cambiar de escritorio y para localizar el puntero.
+
+## Escritorios
+
+| Atajo                  | Acción                                |
+| ---------------------- | ------------------------------------- |
+| `Ctrl+←` / `Ctrl+→`    | Escritorio anterior / siguiente       |
+| `⌘+Alt+←/→`            | Alternativa para cambiar de escritorio |
+
+> En este equipo la tecla física **Ctrl** emite `Super`, así que `Ctrl+flechas` es en realidad `Super+flechas`. El intercambio `ctrl:swap_lwin_lctl` deja ⌘ como `Control`; por eso `⌘+flechas` mueve ventanas y `Ctrl+flechas` cambia de escritorio.
 
 Se aplican con:
 
@@ -33,7 +45,7 @@ También se pueden editar gráficamente en `Menú → Preferencias → Teclado �
 
 ## ¿Por qué `⌘Tab` y no `Alt+Tab`?
 
-Al hacer que **Option** funcione como **AltGr** (para escribir `@`, `#`, `€`… como en macOS), `Alt+Tab` deja de ser cómodo: Option izquierdo ya no es un Alt normal. Por eso el cambio de ventana se movió a `⌘Tab` (`Ctrl+Tab`) y `Super+Tab`.
+Al hacer que **Option** funcione como **AltGr** (para escribir `@`, `#`, `€`… como en macOS), `Alt+Tab` deja de ser cómodo: Option izquierdo ya no es un Alt normal. Por eso el cambio de ventana se movió a `⌘Tab` (`Ctrl+Tab`).
 
 ## Atajos de edición (estándar)
 
