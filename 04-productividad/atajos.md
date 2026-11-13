@@ -69,13 +69,37 @@ Al hacer que **Option** funcione como **AltGr** (para escribir `@`, `#`, `€`�
 
 | Atajo             | Acción                             |
 | ----------------- | ---------------------------------- |
-| `Super`           | Abrir el menú                      |
+| `Toque ⌘`         | Abrir / cerrar el menú (xcape)     |
+| `Super`           | Abrir el menú (tecla física Ctrl)  |
 | `Super+E`         | Abrir el gestor de archivos (Nemo) |
 | `Super+L`         | Bloquear la sesión                 |
 | `Super+D`         | Mostrar el escritorio              |
 | `Ctrl+Alt+Esc`    | Reiniciar Cinnamon                 |
 | `Ctrl+Alt+Supr`   | Cerrar sesión / apagar             |
 | `Impr Pant`       | Captura de pantalla                |
+
+## Un toque de ⌘ abre el menú (xcape)
+
+El intercambio `ctrl:swap_lwin_lctl` hace que:
+
+- la tecla física **⌘** emita `Control_L`;
+- la tecla física **Ctrl** emita `Super_L`.
+
+Cinnamon solo acepta `Super` como tecla del menú, así que sin ayuda el menú se abriría con la tecla física **Ctrl**, no con ⌘. Para recuperar el gesto natural se usa **xcape**:
+
+```bash
+sudo apt-get install -y xcape
+xcape -e 'Control_L=Super_L'
+```
+
+- **Toque de ⌘** → envía `Super_L` → abre/cierra el menú.
+- **Mantener ⌘** → sigue siendo `Ctrl` → `⌘C`, `⌘V`, `⌘Q` funcionan igual.
+
+`atajos-mac.sh` instala xcape y crea el autostart `~/.config/autostart/xcape-cmd-menu.desktop` para que arranque con la sesión. Para desactivarlo:
+
+```bash
+./dotfiles/cinnamon/atajos-mac.sh --revertir
+```
 
 ## Símbolos con Option (AltGr)
 

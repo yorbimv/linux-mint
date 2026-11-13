@@ -22,6 +22,7 @@ timeshift         # copias de seguridad del sistema
 warpinator        # compartir archivos en la red local
 webapp-manager    # crear "apps" de sitios web
 neofetch          # resumen del sistema en la terminal
+xcape             # un toque de Cmd abre el menú (mantener = Ctrl)
 
 # Opcionales que puedes añadir a mano (no instalados por defecto):
 # tree ripgrep htop gparted vlc gimp

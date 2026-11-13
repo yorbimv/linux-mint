@@ -97,6 +97,20 @@ Prueba rápida en una terminal o editor:
 | `⌘C`        | copiar        |
 | `⌘Q`        | cerrar ventana|
 
+## Toque de ⌘ para abrir el menú
+
+El intercambio `ctrl:swap_lwin_lctl` deja `Super_L` en la **tecla física Ctrl**, y Cinnamon solo abre el menú con `Super`. Para que un **toque de ⌘** abra el menú sin perder `⌘C`/`⌘V`, se usa **xcape**:
+
+```bash
+sudo apt-get install -y xcape
+xcape -e 'Control_L=Super_L'
+```
+
+- **Toque de ⌘** → envía `Super_L` → abre/cierra el menú.
+- **Mantener ⌘** + otra tecla → sigue siendo `Ctrl` → atajos de siempre.
+
+Se instala con [`dotfiles/cinnamon/atajos-mac.sh`](../dotfiles/cinnamon/atajos-mac.sh) (paso `08-cinnamon`), que también crea el autostart de la sesión.
+
 ## Se perdió después de actualizar
 
 Las actualizaciones de **`xkb-data`** reescriben `/usr/share/X11/xkb/symbols/es` y borran el bloque `mac`. Solución:
@@ -123,6 +137,7 @@ Y editar `/etc/default/keyboard` para quitar `XKBVARIANT="mac"` (hay respaldos `
 | ----------------------------------------- | ----------------------------------------------------------------- |
 | `⌥2` escribe `"` en vez de `@`            | La variante no está activa: `setxkbmap -query` y reinstalar        |
 | `⌘` no copia/pega                         | Falta `ctrl:swap_lwin_lctl` en las opciones                        |
+| El menú no se abre con un toque de `⌘`    | xcape no corre: `pkill -x xcape; setsid -f xcape -e 'Control_L=Super_L'` |
 | `Alt+Tab` no cambia de ventana            | Es normal: usar `⌘Tab`                                            |
 | Acentos raros o teclas muertas            | Revisar que la variante sea `es(mac)`, no `es` a secas             |
 | Tras actualizar, todo vuelve al layout PC | `xkb-data` borró el bloque: reinstalar la variante                |

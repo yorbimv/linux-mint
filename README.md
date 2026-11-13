@@ -218,7 +218,7 @@ cd ~/Documentos/GitHub/linux-mint
 | USB       | ISO verificada, escritura con `dd`/Etcher, arranque `⌥` en el Mac             |
 | Sistema   | `apt` al día, DKMS, drivers propietarios, Cinnamon afinado                     |
 | Hardware  | WiFi BCM4331 con `wl`, teclado `es(mac)`, trackpad con clic derecho a 2 dedos, LED óptico del jack apagado |
-| Atajos    | `⌘Q` cerrar, `⌘M`/`⌘H` minimizar, `⌘⇧M` maximizar, `⌘Tab`, `⌘←/→` media pantalla |
+| Atajos    | Toque de `⌘` abre el menú, `⌘Q` cerrar, `⌘M`/`⌘H` minimizar, `⌘⇧M` maximizar, `⌘Tab`, `⌘←/→` media pantalla |
 | Apps      | Brave (repo apt oficial), Firefox, Thunderbird, RustDesk 1.5.x, LibreOffice, Celluloid |
 | Dev       | git, GitHub CLI, build-essential, Python y OpenCode                           |
 | Remoto    | RustDesk como servicio, acceso no supervisado, ajustes de vídeo para GPU Intel |

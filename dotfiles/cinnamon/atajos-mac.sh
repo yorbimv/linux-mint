@@ -16,6 +16,8 @@ WM=org.cinnamon.desktop.keybindings.wm
 MODO="${1:-aplicar}"
 
 if [[ "$MODO" == "--revertir" ]]; then
+    pkill -x xcape 2>/dev/null || true
+    rm -f "$HOME/.config/autostart/xcape-cmd-menu.desktop"
     gsettings set $WM close                     "['<Alt>F4']"
     gsettings set $WM minimize                  "@as []"
     gsettings set $WM switch-windows            "['<Alt>Tab']"
@@ -43,6 +45,28 @@ else
     echo "  Cmd+Shift+M  maximizar / restaurar"
     echo "  Cmd+Tab      cambiar de ventana (Shift+Cmd+Tab al reves)"
     echo "  Cmd+Izq/Der  ventana a la mitad izquierda/derecha"
+
+    # La tecla Cmd emite Control_L. Con xcape, un TOQUE de Cmd envia Super_L
+    # (abre/cierra el menu) y, si se mantiene pulsada, sigue siendo Ctrl
+    # para Cmd+C, Cmd+V, Cmd+Q, etc.
+    if command -v xcape >/dev/null 2>&1; then
+        mkdir -p "$HOME/.config/autostart"
+        cat > "$HOME/.config/autostart/xcape-cmd-menu.desktop" <<'DESKTOP'
+[Desktop Entry]
+Type=Application
+Name=Cmd abre el menu
+Comment=Un toque de Cmd abre el menu; mantenerla la usa como Ctrl
+Exec=xcape -e Control_L=Super_L
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+DESKTOP
+        pkill -x xcape 2>/dev/null || true
+        setsid -f xcape -e 'Control_L=Super_L' >/dev/null 2>&1
+        echo "  Toque de Cmd  abre/cierra el menu (mantener = Ctrl)"
+    else
+        echo "  (xcape no instalado: sudo apt-get install -y xcape)"
+    fi
 fi
 
 echo
