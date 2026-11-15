@@ -1,6 +1,6 @@
 # 03 · Dev Environment
 
-Este equipo es **ligero a propósito**: Intel i5 de 2012 con 15 GB de RAM. El entorno de desarrollo es mínimo y funciona bien: Bash, Git, GitHub CLI, Python y OpenCode. No hay Node, Docker, zsh ni neovim instalados.
+Este equipo es **ligero a propósito**: Intel i5 de 2012 con 15 GB de RAM. El entorno de desarrollo es mínimo y funciona bien: Bash, Git, GitHub CLI, Python, OpenCode y VS Code. No hay Node, Docker, zsh ni neovim instalados.
 
 ## Herramientas instaladas
 
@@ -12,6 +12,7 @@ Este equipo es **ligero a propósito**: Intel i5 de 2012 con 15 GB de RAM. El en
 | Python            | 3.12.3         | Scripts y utilidades                       |
 | build-essential   | —              | `gcc`, `make`, headers (DKMS del WiFi)     |
 | OpenCode Desktop  | 2.2.7          | Agente de IA con MCP                       |
+| VS Code           | 1.146.0        | Editor principal (repo oficial de Microsoft)|
 | Xed               | —              | Editor de texto gráfico                    |
 
 Instalación base (paso `02-apt`):
@@ -33,7 +34,7 @@ sudo apt-get install -y git gh curl wget build-essential dkms dconf-cli python3
 | Node.js     | No se desarrolla frontend en este equipo                      |
 | Docker      | El hardware va justo de CPU; se usan contenedores en remoto    |
 | zsh / oh-my-zsh | Bash es suficiente y arranca más rápido                   |
-| neovim / VS Code | Se usa Xed para edits rápidos y OpenCode para el resto    |
+| neovim      | Xed y VS Code cubren la edición de texto                      |
 
 Si algún día se necesitan:
 
@@ -42,8 +43,8 @@ Si algún día se necesitan:
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# VS Code desde el repo de Microsoft
-sudo apt-get install -y code
+# VS Code desde el repo oficial de Microsoft
+sudo bash scripts/apps/vscode.sh
 ```
 
 ## Siguiente paso

@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Aplicaciones: Brave, Firefox y utilidades
+# Aplicaciones: Brave, Firefox, VS Code y utilidades
 source "$(dirname "$0")/../lib.sh"
 say "Aplicaciones"
 F="$REPO/paquetes/apt-extra.txt"
 
 echo "• Brave Browser (repositorio oficial, se actualiza con apt)"
 ask "  ¿Instalar Brave?" && sudo bash "$REPO/scripts/apps/brave.sh"
+
+echo
+echo "• Visual Studio Code estable (repositorio oficial de Microsoft)"
+ask "  ¿Instalar VS Code?" && sudo bash "$REPO/scripts/apps/vscode.sh"
 
 echo
 echo "• Firefox + locales en español"

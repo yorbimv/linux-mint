@@ -8,6 +8,7 @@ Todo lo que está instalado fuera de lo que trae Linux Mint de fábrica. El paso
 | ------------------- | -------------- | ------------------------------- |
 | Brave Browser       | 1.99.55        | repo apt oficial de Brave       |
 | Firefox             | 159.0.1        | repos de Linux Mint             |
+| Visual Studio Code  | 1.146.0        | repo apt oficial de Microsoft   |
 | Thunderbird         | 153.6.0esr     | repos de Linux Mint             |
 | RustDesk            | 1.5.3          | `.deb` oficial de GitHub        |
 | Celluloid           | 0.21           | repos de Linux Mint             |
@@ -55,6 +56,26 @@ sudo apt-get install -y firefox firefox-locale-es firefox-locale-en
 
 - Se mantiene como navegador secundario (cuentas de trabajo, perfiles aislados).
 - El idioma de la interfaz se cambia en `about:preferences → General → Language`.
+
+## Visual Studio Code
+
+Editor estable desde el repositorio oficial de Microsoft (se actualiza con `apt`):
+
+```bash
+sudo bash scripts/apps/vscode.sh
+```
+
+- Clave en `/etc/apt/keyrings/packages.microsoft.gpg`, con huella `BC52 8686 B50D 79E3 39D3 721C EB3E 94AD BE12 29CF`.
+- Repositorio en `/etc/apt/sources.list.d/vscode.list` (copia en [`paquetes/vscode.list`](../paquetes/vscode.list)).
+- Paquete `code`; lanzador `com.microsoft.VSCode.desktop`.
+- Se abre desde el menú como **Visual Studio Code** o con `code` en la terminal.
+
+Verificación:
+
+```bash
+code --version
+apt-cache policy code
+```
 
 ## RustDesk
 
