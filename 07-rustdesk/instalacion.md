@@ -10,14 +10,15 @@ El script:
 
 1. Consulta la última versión estable en la API de GitHub.
 2. Descarga el `.deb` `rustdesk-<versión>-x86_64.deb`.
-3. Lo instala con `apt-get install -y ./archivo.deb` (resuelve dependencias).
-4. Habilita y arranca `rustdesk.service`.
-5. Muestra la versión instalada.
+3. Verifica el **SHA-256** publicado por GitHub (si la release lo incluye).
+4. Lo instala con `apt-get install -y ./archivo.deb` (resuelve dependencias).
+5. Habilita y arranca `rustdesk.service`.
+6. Muestra la versión instalada.
 
 Comprobar:
 
 ```bash
-rustdesk --version                  # rustdesk 1.5.1
+rustdesk --version                  # rustdesk 1.5.3
 systemctl is-enabled rustdesk.service
 systemctl is-active  rustdesk.service
 dpkg -l | grep rustdesk

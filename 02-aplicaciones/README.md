@@ -9,7 +9,7 @@ Todo lo que está instalado fuera de lo que trae Linux Mint de fábrica. El paso
 | Brave Browser       | 1.99.55        | repo apt oficial de Brave       |
 | Firefox             | 159.0.1        | repos de Linux Mint             |
 | Thunderbird         | 153.6.0esr     | repos de Linux Mint             |
-| RustDesk            | 1.5.1          | `.deb` oficial de GitHub        |
+| RustDesk            | 1.5.3          | `.deb` oficial de GitHub        |
 | Celluloid           | 0.21           | repos de Linux Mint             |
 | Drawing             | —              | repos de Linux Mint             |
 | Xviewer / Pix       | —              | repos de Linux Mint             |

@@ -13,7 +13,7 @@ En la mayoría de los casos **no es este MacBook**, sino el equipo al que te con
 - Está **bloqueado, suspendido o con la pantalla apagada**. RustDesk no puede capturar nada.
 - macOS no le dio permiso de **Grabación de pantalla** (`Privacidad y seguridad → Grabación de pantalla`) o de **Accesibilidad**.
 - Tiene activado un **modo de privacidad** o un protector que oculta la pantalla.
-- Versión de RustDesk distinta o anterior a 1.5.1.
+- Versión de RustDesk distinta o anterior a 1.5.3.
 
 Checklist en el equipo remoto:
 

@@ -19,14 +19,14 @@ mkdir -p "$DEST"
 echo "== 1/5  Consultando la ultima version =="
 JSON="$DEST/rustdesk-release.json"
 curl -fsSL --max-time 60 -o "$JSON" https://api.github.com/repos/rustdesk/rustdesk/releases/latest
-read -r VER URL NAME <<<"$(python3 - "$JSON" <<'PY'
+read -r VER URL NAME DIGEST <<<"$(python3 - "$JSON" <<'PY'
 import json, sys
 d = json.load(open(sys.argv[1]))
 ver = d.get('tag_name', '')
 for a in d.get('assets', []):
     n = a['name']
     if n.endswith('-x86_64.deb') and 'sciter' not in n and 'unattended' not in n:
-        print(ver, a['browser_download_url'], n)
+        print(ver, a['browser_download_url'], n, a.get('digest') or '')
         break
 PY
 )"
@@ -44,6 +44,19 @@ echo
 echo "== 3/5  Verificando el paquete =="
 dpkg-deb -f "$DEB" Package Version Architecture 2>/dev/null | sed 's/^/   /'
 dpkg-deb -I "$DEB" >/dev/null 2>&1 || { echo "ERROR: el .deb esta corrupto"; exit 1; }
+if [[ -n "${DIGEST:-}" ]]; then
+    ESPERADO="${DIGEST#sha256:}"
+    REAL="$(sha256sum "$DEB" | awk '{print $1}')"
+    if [[ "$REAL" != "$ESPERADO" ]]; then
+        echo "ERROR: el SHA-256 no coincide"
+        echo "   esperado: $ESPERADO"
+        echo "   obtenido: $REAL"
+        exit 1
+    fi
+    echo "   SHA-256 OK: $REAL"
+else
+    echo "   AVISO: la release no publica SHA-256; se omite la comprobacion"
+fi
 
 echo
 echo "== 4/5  Instalando (con dependencias) =="

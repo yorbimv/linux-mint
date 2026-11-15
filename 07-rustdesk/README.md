@@ -1,10 +1,10 @@
 # 07 · RustDesk
 
-> Cliente 1.5.1 desde el `.deb` oficial · servicio `rustdesk.service` activo · servidores públicos de RustDesk
+> Cliente 1.5.3 desde el `.deb` oficial · servicio `rustdesk.service` activo · servidores públicos de RustDesk
 
 RustDesk se usa para **entrar a este MacBook desde otro equipo** y para **conectarse al Mac de la oficina**. No viene de un repositorio apt: se instala desde GitHub para tener siempre la última versión.
 
-> **Estado: funcionando** (noviembre 2026). Con `codec-preference = 'vp8'` y `use-texture-render = 'N'` la sesión recibe vídeo y audio a 30 fps. La causa del "esperando imagen" era el equipo remoto (dormido/bloqueado o sin permisos de grabación de pantalla).
+> **Estado: funcionando** (noviembre 2026, actualizado a 1.5.3 el 2026-11-15). Con `codec-preference = 'vp8'` y `use-texture-render = 'N'` la sesión recibe vídeo y audio a 30 fps. La causa del "esperando imagen" era el equipo remoto (dormido/bloqueado o sin permisos de grabación de pantalla).
 
 ## Contenido
 
@@ -44,7 +44,7 @@ bash dotfiles/rustdesk/estado.sh
 
 - Este equipo debe estar **encendido y despierto**. La suspensión está desactivada en [preferencias](../01-sistema/preferencias.md).
 - El equipo remoto debe tener RustDesk **abierto, desbloqueado y con los permisos de accesibilidad/grabación de pantalla** concedidos (en macOS: *Privacidad y seguridad → Grabación de pantalla* y *Accesibilidad*).
-- Ambos lados con la **misma versión** (1.5.1 o superior).
+- Ambos lados con la **misma versión** (1.5.3 o superior).
 - Red sin bloqueo de UDP 21116/21119; si falla, RustDesk usa relay TCP 443.
 
 ## Por qué hay ajustes de vídeo
