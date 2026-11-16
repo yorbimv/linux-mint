@@ -123,6 +123,8 @@ sudo apt-get install -y $(grep -vE '^\s*(#|$)' paquetes/apt-extra.txt | tr '\n' 
 3. Si es Flatpak: instálalo y luego `flatpak list --app --columns=application,version > paquetes/flatpak.txt`.
 4. Documenta la app en esta página y ejecuta `./scripts/guardar.sh`.
 
+> Si la app recién instalada no aparece en el menú, Cinnamon conserva la lista de aplicaciones en memoria. Recarga el escritorio con `cinnamon --replace &` (o `Ctrl+Alt+Esc`); las ventanas abiertas se mantienen.
+
 ## Siguiente paso
 
 [03 · Dev Environment](../03-dev-environment/) → git, GitHub CLI y OpenCode.

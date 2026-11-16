@@ -70,6 +70,7 @@
 | Problema                                        | Solución rápida                                                                 | Detalle |
 | ----------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
 | Brave no arranca tras actualizar                 | `sudo apt-get install -f`, luego `--reinstall install brave-browser`             | [Apps](../02-aplicaciones/README.md) |
+| Una app recién instalada no aparece en el menú   | Cinnamon mantiene la lista en memoria: `cinnamon --replace &` o `Ctrl+Alt+Esc`   | [Apps](../02-aplicaciones/README.md#añadir-una-aplicación-nueva) |
 | Error de clave GPG de Brave                      | Reimportar la clave y regenerar el `.list`                                       | [Apps](../02-aplicaciones/README.md#brave-browser) |
 | Netflix/Spotify no reproducen                    | Activar Widevine y reiniciar el navegador                                        | [Navegadores](../04-productividad/navegadores.md) |
 | Los enlaces se abren en el navegador equivocado  | `xdg-settings set default-web-browser brave-browser.desktop`                     | [Navegadores](../04-productividad/navegadores.md#cambiar-el-navegador-predeterminado) |
