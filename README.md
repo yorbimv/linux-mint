@@ -221,7 +221,7 @@ cd ~/Documentos/GitHub/linux-mint
 | Hardware  | WiFi BCM4331 con `wl`, teclado `es(mac)`, trackpad con clic derecho a 2 dedos, LED óptico del jack apagado |
 | Atajos    | Toque de `⌘` abre el menú, `⌘Q` cerrar, `⌘M`/`⌘H` minimizar, `⌘⇧M` maximizar, `⌘Tab`, `⌘←/→` media pantalla; `Ctrl+←/→` cambia de escritorio y `Ctrl+Shift+←/→` pasa la ventana a otro escritorio |
 | Apps      | Brave (repo apt oficial), Firefox, Thunderbird, RustDesk 1.5.x, VS Code, LibreOffice, Celluloid |
-| Nube      | Google Drive (3 cuentas) en `~/Google Drive`, `~/Google Drive 2` y `~/Google Drive 3`, y OneDrive en `~/OneDrive`, con rclone y autostart |
+| Nube      | Google Drive (3 cuentas, cada carpeta con su correo) y OneDrive en `~/OneDrive`, con rclone y autostart |
 | Dev       | git, GitHub CLI, build-essential, Python, OpenCode y VS Code                  |
 | Remoto    | RustDesk como servicio, acceso no supervisado, ajustes de vídeo para GPU Intel |
 
@@ -235,7 +235,7 @@ cd ~/Documentos/GitHub/linux-mint
 - [ ] `systemctl is-active rustdesk` dice `active`
 - [ ] `brave-browser --version` responde
 - [ ] `code --version` responde
-- [ ] `ls "$HOME/Google Drive"`, `~/Google Drive 2`, `~/Google Drive 3` y `~/OneDrive` muestran tus archivos; los servicios `rclone-gdrive.service`, `rclone-gdrive2.service`, `rclone-gdrive3.service` y `rclone-onedrive.service` dicen `active`
+- [ ] `ls ~/<correo-1>`, `~/<correo-2>`, `~/<correo-3>` y `~/OneDrive` muestran tus archivos; los servicios `rclone-gdrive.service`, `rclone-gdrive2.service`, `rclone-gdrive3.service` y `rclone-onedrive.service` dicen `active`
 - [ ] El LED rojo del jack de audífonos está apagado
 
 ## Mantener el repo al día

@@ -77,9 +77,10 @@
 | RustDesk se queda en "esperando imagen"          | `bash dotfiles/rustdesk/video.sh` y revisar el equipo remoto                      | [RustDesk](../07-rustdesk/problemas.md) |
 | RustDesk dice "connection is not allowed"        | Iniciar sesión en RustDesk (servidor público)                                    | [RustDesk](../07-rustdesk/problemas.md#the-connection-is-not-allowed) |
 | RustDesk no da audio                             | Activar el altavoz en la barra de la sesión; revisar `pavucontrol`               | [RustDesk](../07-rustdesk/problemas.md#audio-no-funciona) |
-| No aparecen las carpetas de Google Drive / OneDrive | Revisar bookmarks en `~/.config/gtk-3.0/bookmarks` y reiniciar Nemo             | [Nube](../02-aplicaciones/nube.md) |
-| `~/Google Drive` vacía o "El otro extremo de la conexión no está conectado" | `fusermount -uz "$HOME/Google Drive"` y `systemctl --user restart rclone-gdrive.service` | [Nube](../02-aplicaciones/nube.md#cómo-se-monta) |
-| rclone dice "directory already mounted"          | Quedó un montaje zombie: `fusermount -uz "$HOME/Google Drive"` antes de arrancar | [Nube](../02-aplicaciones/nube.md#cómo-se-monta) |
+| No aparecen las carpetas de Drive / OneDrive en Nemo | Revisar bookmarks (`@` codificado como `%40`) y reiniciar Nemo                | [Nube](../02-aplicaciones/nube.md#bookmarks-de-nemo) |
+| Carpeta de cuenta vacía o "El otro extremo de la conexión no está conectado" | `fusermount -uz "$HOME/<correo>"` y `systemctl --user restart rclone-gdrive.service` | [Nube](../02-aplicaciones/nube.md#renombrar-una-carpeta-de-cuenta) |
+| rclone dice "directory already mounted"          | Quedó un montaje zombie: `fusermount -uz "$HOME/<correo>"` antes de arrancar  | [Nube](../02-aplicaciones/nube.md#renombrar-una-carpeta-de-cuenta) |
+| Al renombrar, `grep` dice que sigue montada      | `Google Drive` también coincide con `Google Drive 2`: usar `findmnt -T`        | [Nube](../02-aplicaciones/nube.md#renombrar-una-carpeta-de-cuenta) |
 | OneDrive muestra "página incorrecta" al iniciar sesión | El cliente `onedrive` de Ubuntu tiene un `client_id` viejo: usar rclone ([detalle](../02-aplicaciones/nube.md#por-qué-no-se-usa-el-paquete-onedrive-de-ubuntu)) | [Nube](../02-aplicaciones/nube.md#por-qué-no-se-usa-el-paquete-onedrive-de-ubuntu) |
 | rclone dice "unable to get drive_id and drive_type" | Añadir `drive_id` desde `https://graph.microsoft.com/v1.0/me/drive` al remote | [Nube](../02-aplicaciones/nube.md#repetir-la-autorización-1) |
 

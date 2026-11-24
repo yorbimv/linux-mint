@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Instalar el cliente de Google Drive (rclone) en ~/.local/bin SIN sudo y montarlo en ~/Google Drive.
+# Instalar el cliente de Google Drive (rclone) en ~/.local/bin SIN sudo.
 # Uso: bash scripts/apps/google-drive.sh
 # Requiere: curl, unzip (ya presentes en Linux Mint).
 # La autorización OAuth se hace una sola vez con: rclone authorize drive
@@ -7,8 +7,11 @@ set -euo pipefail
 
 RCLONE_URL="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
 BIN_DIR="$HOME/.local/bin"
-MNT_DIR="$HOME/Google Drive"
-UNIT="$HOME/.config/systemd/user/rclone-gdrive.service"
+# Por convención en este equipo, cada cuenta se monta en una carpeta con su correo.
+# Cambia MNT_DIR por el correo de la cuenta antes de autorizar.
+MNT_DIR="${1:-$HOME/Google Drive}"
+REMOTE="${2:-gdrive}"
+UNIT="$HOME/.config/systemd/user/rclone-${REMOTE}.service"
 
 mkdir -p "$BIN_DIR" "$MNT_DIR"
 
@@ -27,32 +30,30 @@ else
     echo "Instalado: $($BIN_DIR/rclone version | head -1)"
 fi
 
-# ~/.profile ya añade ~/.local/bin al PATH; el shell actual puede no tenerlo.
 echo "Añadiendo ~/.local/bin al PATH de sesiones nuevas (si falta)..."
 if ! grep -q '\.local/bin' "$HOME/.profile" 2>/dev/null; then
     printf '\n# Clientes de nube instalados sin sudo\nif [ -d "$HOME/.local/bin" ] ; then\n    PATH="$HOME/.local/bin:$PATH"\nfi\n' >> "$HOME/.profile"
 fi
 
-# Servicio de usuario: monta el remote gdrive: en ~/Google Drive al iniciar sesión.
 echo "Creando $UNIT ..."
 mkdir -p "$(dirname "$UNIT")"
-cat > "$UNIT" <<'EOF'
+cat > "$UNIT" <<EOF
 [Unit]
-Description=Montar Google Drive (rclone) en ~/Google Drive
+Description=Montar cuenta de Google Drive (rclone) en ${MNT_DIR}
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/rclone mount gdrive: "%h/Google Drive" \
-  --vfs-cache-mode writes \
-  --vfs-cache-max-age 24h \
-  --dir-cache-time 72h \
-  --poll-interval 1m \
-  --umask 002 \
-  --timeout 1h \
+ExecStart=%h/.local/bin/rclone mount ${REMOTE}: "${MNT_DIR}" \\
+  --vfs-cache-mode writes \\
+  --vfs-cache-max-age 24h \\
+  --dir-cache-time 72h \\
+  --poll-interval 1m \\
+  --umask 002 \\
+  --timeout 1h \\
   --retries 3
-ExecStop=-/bin/fusermount -uz "%h/Google Drive"
+ExecStop=-/bin/fusermount -uz "${MNT_DIR}"
 Restart=on-failure
 RestartSec=10
 
@@ -61,18 +62,20 @@ WantedBy=default.target
 EOF
 
 systemctl --user daemon-reload
-systemctl --user enable rclone-gdrive.service
+systemctl --user enable "${REMOTE}.service" 2>/dev/null || systemctl --user enable "$(basename "$UNIT")"
 
 echo
 echo "=== Autorización (solo la primera vez) ==="
 echo "  $BIN_DIR/rclone authorize drive"
-echo "  Inicia sesión en el navegador y pega el token en ~/.config/rclone/rclone.conf:"
-echo "  [gdrive]"
+echo "  Inicia sesión y pega el token en ~/.config/rclone/rclone.conf:"
+echo "  [$REMOTE]"
 echo "  type = drive"
 echo "  scope = drive"
 echo "  token = {\"access_token\":...,\"refresh_token\":...,\"token_type\":\"Bearer\",\"expiry\":...}"
 echo "  chmod 600 ~/.config/rclone/rclone.conf"
 echo
-echo "=== Arrancar el montaje ==="
-echo "  systemctl --user start rclone-gdrive.service"
-echo "  systemctl --user status rclone-gdrive.service"
+echo "=== Arrancar ==="
+echo "  systemctl --user start $(basename "$UNIT")"
+echo
+echo "Ejemplo para otra cuenta:"
+echo "  bash scripts/apps/google-drive.sh \"\$HOME/otra@gmail.com\" gdrive2"
