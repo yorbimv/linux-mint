@@ -77,6 +77,9 @@
 | RustDesk se queda en "esperando imagen"          | `bash dotfiles/rustdesk/video.sh` y revisar el equipo remoto                      | [RustDesk](../07-rustdesk/problemas.md) |
 | RustDesk dice "connection is not allowed"        | Iniciar sesión en RustDesk (servidor público)                                    | [RustDesk](../07-rustdesk/problemas.md#the-connection-is-not-allowed) |
 | RustDesk no da audio                             | Activar el altavoz en la barra de la sesión; revisar `pavucontrol`               | [RustDesk](../07-rustdesk/problemas.md#audio-no-funciona) |
+| No aparecen las carpetas de Google Drive / OneDrive | Revisar bookmarks en `~/.config/gtk-3.0/bookmarks` y reiniciar Nemo             | [Nube](../02-aplicaciones/nube.md) |
+| `~/Google Drive` vacía o "El otro extremo de la conexión no está conectado" | `fusermount -uz "$HOME/Google Drive"` y `systemctl --user restart rclone-gdrive.service` | [Nube](../02-aplicaciones/nube.md#cómo-se-monta) |
+| rclone dice "directory already mounted"          | Quedó un montaje zombie: `fusermount -uz "$HOME/Google Drive"` antes de arrancar | [Nube](../02-aplicaciones/nube.md#cómo-se-monta) |
 
 ## Arranque y sistema
 

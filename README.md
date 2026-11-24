@@ -205,6 +205,7 @@ cd ~/Documentos/GitHub/linux-mint
 | 00  | [💾 Preparar USB](00-preparar-usb/)                | Descargar la ISO, crear la USB, arrancar e instalar Mint   |
 | 01  | [🖥️ Sistema](01-sistema/)                          | Actualizaciones, drivers, preferencias de Cinnamon         |
 | 02  | [📦 Aplicaciones](02-aplicaciones/)                | Brave, Firefox, VS Code, RustDesk, utilidades y paquetes   |
+| 02b | [☁️ Nube](02-aplicaciones/nube.md)                 | Google Drive y OneDrive en carpetas locales dentro de Nemo |
 | 03  | [💻 Dev Environment](03-dev-environment/)          | Bash, Git, GitHub CLI, OpenCode, VS Code                   |
 | 04  | [⚡ Productividad](04-productividad/)               | Navegadores, correo, ofimática y atajos de teclado         |
 | 05  | [🤖 IA Local](05-ia-local/)                        | OpenCode, MCP y modelos locales (opcional)                 |
@@ -220,6 +221,7 @@ cd ~/Documentos/GitHub/linux-mint
 | Hardware  | WiFi BCM4331 con `wl`, teclado `es(mac)`, trackpad con clic derecho a 2 dedos, LED óptico del jack apagado |
 | Atajos    | Toque de `⌘` abre el menú, `⌘Q` cerrar, `⌘M`/`⌘H` minimizar, `⌘⇧M` maximizar, `⌘Tab`, `⌘←/→` media pantalla; `Ctrl+←/→` cambia de escritorio y `Ctrl+Shift+←/→` pasa la ventana a otro escritorio |
 | Apps      | Brave (repo apt oficial), Firefox, Thunderbird, RustDesk 1.5.x, VS Code, LibreOffice, Celluloid |
+| Nube      | Google Drive montado en `~/Google Drive` (rclone, autostart) y `~/OneDrive` (cliente onedrive) |
 | Dev       | git, GitHub CLI, build-essential, Python, OpenCode y VS Code                  |
 | Remoto    | RustDesk como servicio, acceso no supervisado, ajustes de vídeo para GPU Intel |
 
@@ -233,6 +235,7 @@ cd ~/Documentos/GitHub/linux-mint
 - [ ] `systemctl is-active rustdesk` dice `active`
 - [ ] `brave-browser --version` responde
 - [ ] `code --version` responde
+- [ ] `ls "$HOME/Google Drive"` muestra tus archivos y `systemctl --user is-active rclone-gdrive.service` dice `active`
 - [ ] El LED rojo del jack de audífonos está apagado
 
 ## Mantener el repo al día
