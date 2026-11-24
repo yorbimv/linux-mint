@@ -11,6 +11,7 @@ Todo lo que está instalado fuera de lo que trae Linux Mint de fábrica. El paso
 | Visual Studio Code  | 1.146.0        | repo apt oficial de Microsoft   |
 | Thunderbird         | 153.6.0esr     | repos de Linux Mint             |
 | RustDesk            | 1.5.3          | `.deb` oficial de GitHub        |
+| guvcview (cámara)   | 2.0.8          | `.deb` de Ubuntu extraído en `~/.local` (sin sudo) |
 | Celluloid           | 0.21           | repos de Linux Mint             |
 | Drawing             | —              | repos de Linux Mint             |
 | Xviewer / Pix       | —              | repos de Linux Mint             |
@@ -87,6 +88,41 @@ sudo bash scripts/apps/rustdesk.sh
 
 Instalación, servicio, ajustes de vídeo y diagnóstico en [07 · RustDesk](../07-rustdesk/).
 
+## Cámara FaceTime HD (guvcview)
+
+La cámara integrada `05ac:8509` funciona con el driver `uvcvideo`: `/dev/video0` es la captura real y `/dev/video1` solo lleva metadatos (no imagen). Para verla se usa **guvcview**, que aparece en el menú como **guvcview (Cámara)**.
+
+```bash
+bash scripts/apps/guvcview.sh
+```
+
+- Se instala en `~/.local/bin` **sin sudo**, igual que los clientes de nube: `apt-get download` + `dpkg-deb -x`, con `LD_LIBRARY_PATH="$HOME/.local/lib"` en el wrapper.
+- Dependencias que hubo que añadir a mano: `libguvcview-2.1-2t64`, `libgsl27` (`libgsl.so.27`), `libgslcblas0` (`libgslcblas.so.0`) y `v4l-utils` (`v4l2-ctl`).
+- El lanzador usa `-d /dev/video0 -a none`. El `-a none` evita los errores de JACK/ALSA ("*jack server is not running*"); la cámara no lleva micrófono útil en este modelo.
+- **No abrir dos instancias a la vez**: la segunda dice `libv4l2: error setting pixformat: Dispositivo o recurso ocupado`. Cierra la primera o `pkill -x guvcview-bin`.
+- Se descartó **Cheese**: arrastra demasiadas dependencias (Clutter, GStreamer, `libcheese*`) para instalarlo sin sudo.
+
+### Verificar
+
+```bash
+~/.local/bin/guvcview --version
+~/.local/bin/v4l2-ctl -d /dev/video0 --info | grep -E 'Driver name|Card type'
+```
+
+También se puede probar la captura sin GUI:
+
+```bash
+LD_LIBRARY_PATH="$HOME/.local/lib" ~/.local/bin/v4l2-ctl -d /dev/video0 \
+  --set-fmt-video=width=640,height=480,pixelformat=YUYV \
+  --stream-mmap --stream-count=3 --stream-to=/tmp/frame.yuyv
+```
+
+Si el archivo pesa ~1.8 MB y los bytes no son todos cero, el sensor está capturando bien.
+
+### Si no aparece en el menú
+
+Cinnamon cachea la lista de aplicaciones: `Ctrl+Alt+Esc` o `cinnamon --replace &`. El lanzador está en `~/.local/share/applications/guvcview.desktop`.
+
 ## Utilidades del sistema
 
 | Paquete            | Para qué sirve                                  |
@@ -127,7 +163,8 @@ sudo apt-get install -y $(grep -vE '^\s*(#|$)' paquetes/apt-extra.txt | tr '\n' 
 
 ## Nube
 
-- **[Google Drive y OneDrive](nube.md)** — carpetas `~/Google Drive` y `~/OneDrive` en Nemo, instaladas sin sudo con rclone y el cliente `onedrive`.
+- **[Google Drive y OneDrive](nube.md)** — una carpeta por cuenta con su correo y `~/OneDrive` en Nemo, instaladas sin sudo con rclone.
+- **[Cámara FaceTime HD](#cámara-facetime-hd-guvcview)** — visor guvcview y `v4l2-ctl` en `~/.local`, sin sudo.
 
 ## Siguiente paso
 

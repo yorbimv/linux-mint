@@ -16,6 +16,10 @@ echo "• Firefox + locales en español"
 ask "  ¿Instalar/actualizar Firefox y sus locales?" && apt_install firefox firefox-locale-es firefox-locale-en
 
 echo
+echo "• Visor de cámara guvcview (en ~/.local, sin sudo)"
+ask "  ¿Instalar guvcview y v4l-utils?" && bash "$REPO/scripts/apps/guvcview.sh"
+
+echo
 [ -f "$F" ] && note "Otras apps en paquetes/apt-extra.txt:"
 [ -f "$F" ] && grep -vE '^\s*(#|$)' "$F" | sed 's/^/    /'
 [ -f "$F" ] && ask "  ¿Instalar esas utilidades?" && apt_install $(grep -vE '^\s*(#|$)' "$F" | tr '\n' ' ')

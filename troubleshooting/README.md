@@ -53,6 +53,17 @@
 | No se oye nada con audífonos conectados          | `alsamixer` → `F6` → CS4206 → subir **Headphone**; o `pavucontrol`               | [LED óptico](../06-hardware-macbook/led-optico.md) |
 | El audio sale por HDMI u óptico en vez de bocinas | `pactl set-card-profile alsa_card.pci-0000_00_1b.0 output:analog-stereo+input:analog-stereo` | [LED óptico](../06-hardware-macbook/led-optico.md) |
 
+## Cámara
+
+| Problema                                        | Solución rápida                                                                 | Detalle |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
+| No se ve la cámara en ninguna app               | Usar `/dev/video0`; `/dev/video1` es solo metadatos. Instalar el visor: `bash scripts/apps/guvcview.sh` | [Cámara](../02-aplicaciones/README.md#cámara-facetime-hd-guvcview) |
+| `guvcview-bin: error while loading shared libraries: libgsl.so.27` o `libgslcblas.so.0` | Repetir el script: copia `libgsl27` y `libgslcblas0` a `~/.local/lib` | [Cámara](../02-aplicaciones/README.md#cámara-facetime-hd-guvcview) |
+| `Dispositivo o recurso ocupado` al abrir guvcview | Hay otra instancia abierta: `pkill -x guvcview-bin` y volver a abrir | [Cámara](../02-aplicaciones/README.md#cámara-facetime-hd-guvcview) |
+| SALSA/JACK: `jack server is not running`         | Añadir `-a none` al comando o al lanzador (`Exec=... -d /dev/video0 -a none`) | [Cámara](../02-aplicaciones/README.md#cámara-facetime-hd-guvcview) |
+| `Unpatched return thunk in use` en `dmesg`       | Aviso del módulo propietario `wl` (WiFi), **no** de la cámara; ignorar         | [WiFi](../06-hardware-macbook/wifi-bcm4331.md) |
+| La app de cámara no aparece en el menú           | `Ctrl+Alt+Esc` o `cinnamon --replace &`; revisar `~/.local/share/applications/guvcview.desktop` | [Apps](../02-aplicaciones/README.md#si-no-aparece-en-el-menú) |
+
 ## Escritorio
 
 | Problema                                        | Solución rápida                                                                 | Detalle |
