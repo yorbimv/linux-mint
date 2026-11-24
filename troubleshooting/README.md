@@ -80,6 +80,8 @@
 | No aparecen las carpetas de Google Drive / OneDrive | Revisar bookmarks en `~/.config/gtk-3.0/bookmarks` y reiniciar Nemo             | [Nube](../02-aplicaciones/nube.md) |
 | `~/Google Drive` vacía o "El otro extremo de la conexión no está conectado" | `fusermount -uz "$HOME/Google Drive"` y `systemctl --user restart rclone-gdrive.service` | [Nube](../02-aplicaciones/nube.md#cómo-se-monta) |
 | rclone dice "directory already mounted"          | Quedó un montaje zombie: `fusermount -uz "$HOME/Google Drive"` antes de arrancar | [Nube](../02-aplicaciones/nube.md#cómo-se-monta) |
+| OneDrive muestra "página incorrecta" al iniciar sesión | El cliente `onedrive` de Ubuntu tiene un `client_id` viejo: usar rclone ([abajo](#nube)) | [Nube](../02-aplicaciones/nube.md#por-qué-no-se-usa-el-paquete-onedrive-de-ubuntu) |
+| rclone dice "unable to get drive_id and drive_type" | Añadir `drive_id` desde `https://graph.microsoft.com/v1.0/me/drive` al remote | [Nube](../02-aplicaciones/nube.md#repetir-la-autorización-1) |
 
 ## Arranque y sistema
 
