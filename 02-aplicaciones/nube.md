@@ -1,6 +1,6 @@
-# Nube: Google Drive (2 cuentas) y OneDrive
+# Nube: Google Drive (3 cuentas) y OneDrive
 
-Las carpetas `~/Google Drive`, `~/Google Drive 2` y `~/OneDrive` aparecen en el panel lateral de **Nemo** y muestran tus archivos en la nube.
+Las carpetas `~/Google Drive`, `~/Google Drive 2`, `~/Google Drive 3` y `~/OneDrive` aparecen en el panel lateral de **Nemo** y muestran tus archivos en la nube.
 
 > Instalado en `~/.local/bin` **sin sudo** porque en este equipo el diálogo de zenity para la contraseña de sudo no responde. `~/.profile` ya añade `~/.local/bin` al `PATH` en sesiones nuevas; en el shell actual usa la ruta absoluta.
 
@@ -10,6 +10,7 @@ Las carpetas `~/Google Drive`, `~/Google Drive 2` y `~/OneDrive` aparecen en el 
 | ---- | ------ | ------- | ------------------------- | ------ |
 | Google Drive (cuenta 1) | `gdrive` | `~/Google Drive` | `rclone-gdrive.service` | active + enabled |
 | Google Drive (cuenta 2) | `gdrive2` | `~/Google Drive 2` | `rclone-gdrive2.service` | active + enabled |
+| Google Drive (cuenta 3) | `gdrive3` | `~/Google Drive 3` | `rclone-gdrive3.service` | active + enabled |
 | OneDrive | `onedrive` | `~/OneDrive` | `rclone-onedrive.service` | active + enabled |
 
 Todas son carpetas **FUSE montadas bajo demanda** con rclone: los archivos están en la nube y se descargan al abrirlos (no ocupan espacio local). Configuración en `~/.config/rclone/rclone.conf` (permisos `600`, contiene los tokens — **no subir al repo**).
@@ -19,7 +20,8 @@ Todas son carpetas **FUSE montadas bajo demanda** con rclone: los archivos está
 - Binario: `~/.local/bin/rclone`
 - Cuenta 1: remote `gdrive` → `~/Google Drive`
 - Cuenta 2: remote `gdrive2` → `~/Google Drive 2`
-- Ambos: `type = drive`, `scope = drive`, `team_drive =`
+- Cuenta 3: remote `gdrive3` → `~/Google Drive 3`
+- Todos: `type = drive`, `scope = drive`, `team_drive =`
 
 ### Verificar
 
@@ -66,6 +68,10 @@ systemctl --user enable --now rclone-gdrive2.service
 
 Añadir bookmark: `file:///home/yorbimv/Google%20Drive%202` en `~/.config/gtk-3.0/bookmarks`.
 
+Para la **tercera cuenta** se repite con `gdrive3` y `~/Google Drive 3` (servicio `rclone-gdrive3.service`).
+
+> **Cómo saber si es cuenta distinta:** Google emite un `refresh_token` nuevo en cada autorización, así que comparar tokens no sirve. Compara los **IDs de archivo**: `rclone lsjson gdrive: --max-depth 1` contra `rclone lsjson gdrive3: --max-depth 1`. Si los IDs coinciden, autorizaste la misma cuenta otra vez. (Las carpetas compartidas entre cuentas pueden aparecer con el mismo ID; busca un archivo propio distinto.)
+>
 > ⚠️ rclone avisa de que su `client_id` compartido se retira en 2026. Si deja de conectar, crea un `client_id` propio en Google Cloud y añade `client_id` / `client_secret` al remote ([docs](https://rclone.org/drive/#making-your-own-client-id)).
 
 ### Instalación reproducible
@@ -129,6 +135,7 @@ Ambas carpetas están en `~/.config/gtk-3.0/bookmarks`:
 ```
 file:///home/yorbimv/Google%20Drive
 file:///home/yorbimv/Google%20Drive%202
+file:///home/yorbimv/Google%20Drive%203
 file:///home/yorbimv/OneDrive
 ```
 
